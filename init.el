@@ -190,5 +190,5 @@
        (default +bindings +smartparens)
 
        :private-lang
-       vhdlplus
+       vhdl
        )
