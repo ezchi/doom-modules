@@ -190,7 +190,9 @@
        (default +bindings +smartparens)
 
        :private-lang
+       verilog
        vhdl
        :private-tool
+       persp
        shell
        )
