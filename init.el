@@ -190,6 +190,7 @@
        (default +bindings +smartparens)
 
        :private-lang
+       org
        verilog
        vhdl
        :private-tool
