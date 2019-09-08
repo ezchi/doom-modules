@@ -191,4 +191,6 @@
 
        :private-lang
        vhdl
+       :private-tool
+       shell
        )
