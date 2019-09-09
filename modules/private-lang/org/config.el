@@ -1,14 +1,14 @@
 ;;; private-lang/org/config.el -*- lexical-binding: t; -*-
 
 (after! org
-  (setq org-babel-load-languages '((C . t)
-                                   (dot . t)
-                                   (emacs-lisp . t)
-                                   (go . t)
-                                   (ipython . t)
-                                   (latex . t)
-                                   (shell . t)
-                                   ))
+;;  (setq org-babel-load-languages '((C . t)
+;;                                   (dot . t)
+;;                                   (emacs-lisp . t)
+;;                                   (go . t)
+;;                                   (ipython . t)
+;;                                   (latex . t)
+;;                                   (shell . t)
+;;                                   ))
 
   (setq org-directory (expand-file-name "~/hobby/org-gtd/"))
   (setq org-default-notes-file (expand-file-name "notes.org" org-directory))
@@ -18,24 +18,21 @@
    ec-gtd-org (expand-file-name "gtd.org" ec-capture-dir)
    ec-tickler-org (expand-file-name "tickler.org" ec-capture-dir)
    ec-someday-org (expand-file-name "someday.org" ec-capture-dir)
-   org-refile-targets `((,ec-gtd-org :maxlevel . 9)
-                        (,ec-someday-org :maxlevel . 9)
-                        (,ec-tickler-org :maxlevel . 9))
-   org-refile-use-outline-path 'file
-   org-outline-path-complete-in-steps nil
-   org-refile-allow-creating-parent-nodes 'confirm
-   org-enforce-todo-dependencies t
-   org-enforce-todo-checkbox-dependencies t
-   org-agenda-dim-blocked-tasks t
+;;   org-refile-targets `((,ec-gtd-org :maxlevel . 9)
+;;                        (,ec-someday-org :maxlevel . 9)
+;;                        (,ec-tickler-org :maxlevel . 9))
+ ;;  org-refile-use-outline-path 'file
+ ;;  org-outline-path-complete-in-steps nil
+ ;;  org-refile-allow-creating-parent-nodes 'confirm
+ ;;  org-enforce-todo-dependencies t
+ ;;  org-enforce-todo-checkbox-dependencies t
    )
 
-  (setq
-   spaceline-org-clock-p t
-   org-use-property-inheritance t
-   org-confirm-babel-evaluate nil
-   org-cycle-separator-lines 0
-   org-latex-create-formula-image-program 'imagemagick
-   )
+;;  (setq
+;;   org-use-property-inheritance t
+;;   org-cycle-separator-lines 0
+;;   org-latex-create-formula-image-program 'imagemagick
+;;   )
 
   (setq org-agenda-files (list ec-inbox-org ec-gtd-org ec-tickler-org))
 
@@ -50,7 +47,7 @@
           ("K" "Cliplink capture task" entry (file+headline ec-inbox-org "")
            "* TODO %(org-cliplink-capture) \n SCHEDULED: %t\n" :empty-lines 1)))
 
-  (setq org-export-backends '(ascii beamer latex confluence org))
+ ;; (setq org-export-backends '(ascii beamer latex confluence org))
 
   ;; ;; plantuml
   ;; (let ((plantuml-jar (car (file-expand-wildcards (ec-expand-env (expand-file-name "plantuml/libexec/plantuml*.jar" "${BREW_APP_HOME}"))))))
@@ -87,18 +84,18 @@
           "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
           "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
-  (setq org-todo-keywords
-        (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-                (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "MEETING"))))
-
-  (setq org-todo-keyword-faces
-        '(("TODO" :foreground "red" :weight bold)
-          ("NEXT" :foreground "cyan" :weight bold)
-          ("DONE" :foreground "green" :weight bold)
-          ("WAITING" :foreground "orange" :weight bold)
-          ("HOLD" :foreground "magenta" :weight bold)
-          ("CANCELLED" :foreground "forest green" :weight bold)
-          ("MEETING" :foreground "forest green" :weight bold)))
+;;  (setq org-todo-keywords
+;;        (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+;;                (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "MEETING"))))
+;;
+;;  (setq org-todo-keyword-faces
+;;        '(("TODO" :foreground "red" :weight bold)
+;;          ("NEXT" :foreground "cyan" :weight bold)
+;;          ("DONE" :foreground "green" :weight bold)
+;;          ("WAITING" :foreground "orange" :weight bold)
+;;          ("HOLD" :foreground "magenta" :weight bold)
+;;          ("CANCELLED" :foreground "forest green" :weight bold)
+;;          ("MEETING" :foreground "forest green" :weight bold)))
 
   ;; Disable change status with "Shift + left/right"
   ;; (setq-default org-treat-S-cursor-todo-selection-as-state-change nil)
