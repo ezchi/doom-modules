@@ -196,4 +196,6 @@
        :private-tool
        ;;persp
        shell
+       :private-config
+       +bindings
        )
