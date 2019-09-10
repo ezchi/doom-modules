@@ -196,6 +196,7 @@
        :private-tool
        ;;persp
        shell
+       flycheck
        :private-config
        +bindings
        )

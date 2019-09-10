@@ -34,3 +34,5 @@
   (setq verilog-tab-always-indent t)
   (setq verilog-toggle-completions t)
   (setq verilog-typedef-regexp "_t$"))
+
+(use-package yasnippets-verilog)
