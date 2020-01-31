@@ -189,6 +189,8 @@
        ;; config. Use it as a reference for your own modules.
        (default +bindings +smartparens)
 
+       :private
+       ;; experimental
        :private-lang
        org
        verilog
