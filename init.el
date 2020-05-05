@@ -187,4 +187,5 @@
        vhdl
        :private-tool
        git
+       optiver
        )
