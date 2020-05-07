@@ -3,8 +3,9 @@
   "vhdl-tool config file")
 
 (after! vhdl-mode
-  (defun ec-vhdl--init ()
+  (defun ec-vhdl-init ()
     "Initial function which should be added to VHDL mode hook."
+    (interactive)
     (setq-default
      vhdl-basic-offset 4
      vhdl-clock-edge-condition 'function
@@ -74,4 +75,4 @@ See `http://vhdltool.com'."
   (after! lsp
     (add-hook! lsp-mode #'ec-vhdl-setup-flycheck-after-lsp))
 
-  (add-hook! vhdl-mode #'ec-vhdl--init #'lsp #'ec-vhdl-tool-start-server #'ec-vhdl-setup-flycheck-after-lsp))
+  (add-hook! vhdl-mode #'ec-vhdl-init #'lsp #'ec-vhdl-tool-start-server))
