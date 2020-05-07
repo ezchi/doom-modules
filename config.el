@@ -8,6 +8,5 @@
   (setq org-log-state-notes-into-drawer t))
 
 ;; Keybindings
-(when IS-LINUX
-  (map!
-   :n "SPC c l" #'evilnc-comment-or-uncomment-lines))
+(map!
+ :n "SPC c l" #'evilnc-comment-or-uncomment-lines)
