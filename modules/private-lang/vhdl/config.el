@@ -55,9 +55,6 @@
         (message "Starting vhdl-tool server")
         (start-process buffer nil "vhdl-tool" "server"))))
 
-  (add-hook! vhdl-mode #'ec-vhdl-tool-start-server)
-
-
   (after! flycheck
     (flycheck-define-checker vhdl-tool
       "A VHDL syntax checker, type checker and linter using VHDL-Tool.
@@ -75,7 +72,6 @@ See `http://vhdltool.com'."
         (setq flycheck-checker 'vhdl-tool))))
 
   (after! lsp
-    (add-hook 'vhdl-mode-hook #'lsp)
     (add-hook! lsp-mode #'ec-vhdl-setup-flycheck-after-lsp))
 
-  (add-hook! vhdl-mode ec-vhdl--init() 'append))
+  (add-hook! vhdl-mode #'ec-vhdl--init #'lsp #'ec-vhdl-tool-start-server #'ec-vhdl-setup-flycheck-after-lsp))
