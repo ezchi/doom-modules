@@ -10,3 +10,9 @@
 (after! org
   (setq org-log-into-drawer t)
   (setq org-log-state-notes-into-drawer t))
+
+
+;; keybindings
+(map!
+ :n "SPC v" #'er/expand-region
+ :n "SPC t D" #'toggle-debug-on-error)
