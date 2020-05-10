@@ -14,5 +14,6 @@
 
 ;; keybindings
 (map!
- :n "SPC v" #'er/expand-region
- :n "SPC t D" #'toggle-debug-on-error)
+ :n "SPC t D" #'toggle-debug-on-errorg)
+
+(setq which-key-idle-delay 0.5)
