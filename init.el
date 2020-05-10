@@ -177,6 +177,7 @@
        (default +bindings +smartparens)
 
        :private-lang
+       org
        verilog
        vhdl
        )
