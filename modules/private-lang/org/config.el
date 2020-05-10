@@ -6,6 +6,10 @@
   (setq org-agenda-skip-scheduled-if-done t)
   (setq org-agenda-skip-deadline-if-done t)
 
+  ;; Roam
+  (when (featurep! +roam)
+    (setq org-roam-directory (expand-file-name "roam" org-directory)))
+
 ;;  (setq org-babel-load-languages '((C . t)
 ;;                                   (dot . t)
 ;;                                   (emacs-lisp . t)
