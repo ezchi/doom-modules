@@ -185,4 +185,6 @@
        org
        verilog
        vhdl
+       :private-tool
+       git
        )
