@@ -8,7 +8,16 @@
 
   ;; Roam
   (when (featurep! +roam)
-    (setq org-roam-directory (expand-file-name "roam" org-directory)))
+    (setq org-roam-directory (expand-file-name "roam" org-directory))
+    (use-package! org-journal
+      :bind
+      ("SPC n j" . org-journal-new-entry)
+      :custom
+      (org-journal-dir org-roam-directory)
+      (org-journal-date-prefix "#+TITLE: ")
+      (org-journal-file-format "%Y-%m-%d.org")
+      (org-journal-date-format "%A, %d %B %Y"))
+    (setq org-journal-enable-agenda-integration t))
 
 ;;  (setq org-babel-load-languages '((C . t)
 ;;                                   (dot . t)
@@ -128,4 +137,15 @@
 ;;   ;; ignore leading starts or tags on heading for 'org-beginning-of-line' and
 ;;   ;; 'org-end-of-line'
 ;;   (setq org-special-ctrl-a/e t)
-   )
+  )
+
+
+(after! org-roam
+  (setq org-roam-ref-capture-templates
+        '(("r" "ref" plain (function org-roam-capture--get-point)
+           "%?"
+           :file-name "websites/${slug}"
+           :head "#+TITLE: ${title}
+    #+ROAM_KEY: ${ref}
+    - source :: ${ref}"
+           :unnarrowed t))))
