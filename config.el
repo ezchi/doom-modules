@@ -13,6 +13,8 @@
 
 
 ;; keybindings
+(setq doom-localleader-key ",")
+
 (map!
  :n "SPC t D" #'toggle-debug-on-errorg)
 
