@@ -1,13 +1,28 @@
 ;;; private-lang/org/config.el -*- lexical-binding: t; -*-
 
 (after! org
-  (setq org-log-done 'time)
-  (setq org-use-property-inheritance t)
-  (setq org-agenda-skip-scheduled-if-done t)
-  (setq org-agenda-skip-deadline-if-done t)
+  ;; Property
+  (setq
+   org-use-property-inheritance t
+   org-catch-invisible-edits 'smart
+   )
 
-  ;; export
+  ;; Agenda
+  (setq
+   org-agenda-skip-scheduled-if-done t
+   org-agenda-skip-deadline-if-done t
+   )
+
+  ;; Export
   (setq org-export-backends '(ascii html icalendar latex md odt pandoc pdf))
+
+  ;; Log & Draw
+  (setq
+   org-log-done 'time
+   org-log-repeat 'time
+   org-log-redeadline 'note
+   org-log-reschedule 'note
+   )
 
   ;; Roam
   (when (featurep! +roam)
@@ -21,6 +36,10 @@
       (org-journal-file-format "%Y-%m-%d.org")
       (org-journal-date-format "%A, %d %B %Y"))
     (setq org-journal-enable-agenda-integration t))
+
+  ;; TODO
+  (setq org-enforce-todo-checkbox-dependencies t)
+
 
 ;;  (setq org-babel-load-languages '((C . t)
 ;;                                   (dot . t)
