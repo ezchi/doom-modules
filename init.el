@@ -178,13 +178,6 @@
        ;;twitter           ; twitter client https://twitter.com/vnought
 
        :config
-       ;;literate
+       literate
        (default +bindings +smartparens)
-
-       :private-lang
-       org
-       verilog
-       vhdl
-       :private-tool
-       git
        )

@@ -1,0 +1,268 @@
+
+* User Information
+#+begin_src emacs-lisp
+(setq user-full-name "Enze Chi")
+(if (string= (system-name) "Enzes-MacBook-Pro.local")
+    (setq user-mail-address "Enze.Chi@gmail.com")
+  (setq user-mail-address "Enze.Chi@optiver.com.au"))
+#+end_src
+
+* Appearance
+** Fonts
+#+begin_src emacs-lisp
+(if IS-MAC
+    (setq doom-font (font-spec :family "Go Mono for Powerline" :size 12))
+  (setq doom-font (font-spec :family "Go Mono for Powerline" :size 22)))
+#+end_src
+
+** Display time with date
+#+begin_src emacs-lisp
+(setq display-time-day-and-date t)
+(display-time-mode t)
+#+end_src
+
+
+;; Org
+(after! org
+  (setq org-log-into-drawer t)
+  (setq org-log-state-notes-into-drawer t))
+
+* Key bindings
+Change local leader key to =,=.
+
+#+begin_src emacs-lisp
+(setq doom-localleader-key ",")
+#+end_src
+
+Show =which-key= window faster.
+#+begin_src emacs-lisp
+(setq which-key-idle-delay 0.5)
+#+end_src
+
+* Languages
+** Org
+*** Log & Drawer
+#+begin_src emacs-lisp
+(after! org
+  (setq org-log-into-drawer t
+        org-log-state-notes-into-drawer t
+        org-log-done 'time
+        org-log-repeat 'time
+        org-log-redeadline 'note
+        org-log-reschedule 'note))
+#+end_src
+
+*** Property
+#+begin_src emacs-lisp
+(after!
+  (setq org-use-property-inheritance t
+        org-catch-invisible-edits 'smart))
+#+end_src
+
+*** Agenda
+#+begin_src emacs-lisp
+(after!
+  (setq org-agenda-skip-scheduled-if-done t
+        org-agenda-skip-deadline-if-done t))
+#+end_src
+
+*** Export
+#+begin_src emacs-lisp
+(after! (setq org-export-backends '(ascii html icalendar latex md odt pandoc pdf)))
+#+end_src
+
+*** Roam
+#+begin_src emacs-lisp
+(after!
+  (when (featurep! +roam)
+    (setq org-roam-directory (expand-file-name "roam" org-directory))
+    (use-package! org-journal
+      :bind
+      ("SPC n j" . org-journal-new-entry)
+      :custom
+      (org-journal-dir org-roam-directory)
+      (org-journal-date-prefix "#+TITLE: ")
+      (org-journal-file-format "%Y-%m-%d.org")
+      (org-journal-date-format "%A, %d %B %Y"))
+    (setq org-journal-enable-agenda-integration t)))
+#+end_src
+
+Add =roam= capture template.
+#+begin_src emacs-lisp
+(after! org-roam
+  (setq org-roam-ref-capture-templates
+        '(("r" "ref" plain (function org-roam-capture--get-point)
+           "%?"
+           :file-name "websites/${slug}"
+           :head "#+TITLE: ${title}
+    ,#+ROAM_KEY: ${ref}
+    - source :: ${ref}"
+           :unnarrowed t))))
+#+end_src
+
+*** TODOs
+#+begin_src emacs-lisp
+(after! (setq org-enforce-todo-checkbox-dependencies t))
+#+end_src
+
+** VHDL
+*** Initialization
+#+begin_src emacs-lisp
+(after! vhdl-mode
+  (defun ec-vhdl-init ()
+    "Initial function which should be added to VHDL mode hook."
+    (interactive)
+    (setq-default
+     vhdl-basic-offset 4
+     vhdl-clock-edge-condition 'function
+     vhdl-conditions-in-parenthesis t
+     vhdl-end-comment-column 100
+     vhdl-highlight-special-words t
+     vhdl-highlight-translate-off t
+     vhdl-highlight-verilog-keywords t
+     vhdl-include-port-comments t
+     vhdl-include-type-comments t
+     vhdl-inline-comment-column 70
+     vhdl-instance-name '(".*" . "i_\\&")
+     vhdl-reset-active-high t
+     vhdl-reset-kind 'sync
+     vhdl-standard '(8 (math))
+     vhdl-underscore-is-part-of-word t
+     vhdl-upper-case-constants t
+     vhdl-upper-case-enum-values t)
+    (add-to-list 'vhdl-offsets-alist '(arglist-close . 0))))
+#+end_src
+
+*** VHDL-TOOL
+Define vhdl-tool config file.
+#+begin_src emacs-lisp
+(defvar ec-vhdl-tool-config "vhdltool-config.yaml"
+  "vhdl-tool config file")
+#+end_src
+
+Add =vhdl-tool= as flycheck checker.
+#+begin_src emacs-lisp
+(after! flycheck
+  (flycheck-define-checker vhdl-tool
+    "A VHDL syntax checker, type checker and linter using VHDL-Tool.
+See `http://vhdltool.cam'."
+    :command ("vhdl-tool" "client" "lint" "--compact" source-inplace)
+    :error-patterns
+    ((warning line-start (file-name) ":" line ":" column ":w:" (message) line-end)
+     (error line-start (file-name) ":" line ":" column ":e:" (message) line-end))
+    :modes vhdl-mode))
+  ;; (add-to-list 'flycheck-checkers 'vhdl-tool)
+#+end_src
+
+Flycheck hook function to select =vhdl-tool= as checker.
+#+begin_src emacs-lisp
+(after! flycheck
+  (defun ec-vhdl-setup-flycheck-after-lsp ()
+    "Setup vhdl-tool as flycheck checker for VHDL mode"
+    (when (eq major-mode 'vhdl-mode)
+      (flycheck-select-checker 'vhdl-tool)
+      (setq flycheck-checker 'vhdl-tool))))
+#+end_src
+
+Helper functions to start/stop =vhdl-tool= server for linting.
+#+begin_src emacs-lisp
+(defun ec-vhdl-tool--server-process-buffer-name ()
+  "Get vhdl-tool server name for current project"
+  (format "vhdl-tool server@%s" (projectile-project-root)))
+
+(defun ec-vhdl-tool--server-start-p (buffer)
+  "Return non-nil if the BUFFER associated process is started."
+  (let ((process (get-buffer-process buffer)))
+    (if process(eq (process-status (get-buffer-process buffer)) 'run)
+      nil)))
+
+(defun ec-vhdl-tool-stop-server ()
+  "Stop vhdl-tool server if it is started."
+  (interactive)
+  (let ((buffer (ec-vhdl-tool--server-process-buffer-name)))
+    (when (ec-vhdl-tool--server-start-p buffer)
+      (kill-process (get-buffer-process buffer)))))
+
+(defun ec-vhdl-tool-start-server ()
+  "Start vhdl-tool server for linting."
+  (interactive)
+  (let* ((default-directory (projectile-project-root))
+         (buffer (ec-vhdl-tool--server-process-buffer-name)))
+    (unless (executable-find "vhdl-tool")
+      (error "Can not find vhdl-tool"))
+    (unless (file-exists-p ec-vhdl-tool-config)
+      (error "Can not find %s @ %s" ec-vhdl-tool-config default-directory))
+    (unless (ec-vhdl-tool--server-start-p buffer)
+      (message "Starting vhdl-tool server")
+      (start-process buffer nil "vhdl-tool" "server"))))
+#+end_src
+
+*** Hooks
+Enable LSP.
+#+begin_src emacs-lisp
+(after! lsp
+  (add-hook! lsp-mode #'ec-vhdl-setup-flycheck-after-lsp))
+#+end_src
+
+#+begin_src emacs-lisp
+(after! vhdl-mode (add-hook! vhdl-mode #'ec-vhdl-init #'lsp #'ec-vhdl-tool-start-server))
+#+end_src
+
+** Verilog
+*** Flycheck
+Change =verilator= linter executable to =verilator_bin= to avoid crash.
+#+begin_src emacs-lisp
+(after! flycheck
+  (setq-default flycheck-verilog-verilator-executable "verilator_bin"))
+#+end_src
+*** verilog-mode
+#+begin_src emacs-lisp
+(use-package! verilog-mode
+  :defer t
+  :mode "\\.[s]?v[h]?\\'"
+  :config
+  ;;  (add-hook 'verilog-mode-hook '(lambda()
+  ;;                                  ;; Do not automatically insert "'" pair : 1'b0 -> 1'b0'
+  ;;                                  (sp-local-pair 'verilog-mode "'" nil :actions nil)
+  ;;
+  ;;                                  ;; Use space for indent
+  ;;                                  (setq-default indent-tabs-mode nil)))
+
+  (setq verilog-align-ifelse nil)
+  (setq verilog-auto-indent-on-newline t)
+  (setq verilog-auto-lineup 'assignments)
+  (setq verilog-auto-newline nil)
+  (setq verilog-case-indent 4)
+  (setq verilog-cexp-indent 0)
+  (setq verilog-debug t)
+  (setq verilog-highlight-grouping-keywords t)
+  (setq verilog-highlight-includes t)
+  (setq verilog-highlight-modules t)
+  (setq verilog-highlight-translate-off t)
+  (setq verilog-indent-begin-after-if nil)
+  (setq verilog-indent-declaration-macros nil)
+  (setq verilog-indent-level 4)
+  (setq verilog-indent-level-behavioral 4)
+  (setq verilog-indent-level-declaration 4)
+  (setq verilog-indent-level-module 4)
+  (setq verilog-indent-lists t)
+  (setq verilog-library-extensions '(".v" ".sv" ".svh"))
+  (setq verilog-minimum-comment-distance 40)
+  (setq verilog-tab-always-indent t)
+  (setq verilog-typedef-regexp "_t$"))
+#+end_src
+*** yasnippets-verilog
+#+begin_src emacs-lisp
+(use-package! yasnippets-verilog
+  :defer t)
+#+end_src
+
+* Tools
+** Git
+*** git-auto-commit-mode
+#+begin_src emacs-lisp
+(use-package! git-auto-commit-mode
+  :commands (git-auto-commit-mode)
+  :config
+  (setq gac-debounce-interval 3600))
+#+end_src
