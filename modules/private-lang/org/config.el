@@ -6,6 +6,9 @@
   (setq org-agenda-skip-scheduled-if-done t)
   (setq org-agenda-skip-deadline-if-done t)
 
+  ;; export
+  (setq org-export-backends '(ascii html icalendar latex md odt pandoc pdf))
+
   ;; Roam
   (when (featurep! +roam)
     (setq org-roam-directory (expand-file-name "roam" org-directory))
