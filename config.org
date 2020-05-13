@@ -1,3 +1,15 @@
+#+options: ':t *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline author:t
+#+options: broken-links:nil c:nil creator:nil d:(not "LOGBOOK") date:t e:t
+#+options: email:nil f:t inline:t num:t p:nil pri:nil prop:nil stat:t tags:t
+#+options: tasks:t tex:t timestamp:t title:t toc:t todo:t |:t
+#+title: config
+#+date: <2020-05-14 Thu>
+#+author: Enze Chi
+#+email: Enze.Chi@gmail.com
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 26.3 (Org mode 9.4)
 
 * User Information
 #+begin_src emacs-lisp
@@ -276,4 +288,13 @@ Change =verilator= linter executable to =verilator_bin= to avoid crash.
   :commands (git-auto-commit-mode)
   :config
   (setq gac-debounce-interval 3600))
+#+end_src
+** GPG :noexport:
+These are encrypted with gpg and are essentially set mostly by custom-*
+#+begin_src emacs-lisp :tangle no
+(use-package! epa-file
+  :config
+  (epa-file-enable)
+  (setq custom-file (concat doom-private-dir "local/private.el.gpg"))
+  (load custom-file))
 #+end_src
