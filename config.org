@@ -256,7 +256,7 @@ Add =roam= capture template.
      vhdl-standard '(8 (math))
      vhdl-underscore-is-part-of-word t
      vhdl-upper-case-constants t
-     vhdl-upper-case-enum-values t)
+     vhdl-upper-case-enum-values nil)
     (add-to-list 'vhdl-offsets-alist '(arglist-close . 0))
     (advice-add 'lsp-hover :around #'ec-skip-lsp-hover-on-empty-line)))
 #+end_src
@@ -370,7 +370,7 @@ Add advice function to skip =lsp-hover= on empty line.
 #+begin_src emacs-lisp
 (defun ec-skip-lsp-hover-on-empty-line (f &rest args)
   "Skip lsp-hover on empty or whitespaces only lines."
-  (if (ec--whitespace-or-empty-line)
+  (if (ec--whitespace-or-empty-line-p)
       (setq lsp--hover-saved-bounds nil
             lsp--eldoc-saved-message nil)
     (apply f args)))
@@ -568,7 +568,6 @@ Manage multiple =vterm= buffers.
 #+end_src
 
 * Email
-
 #+begin_src emacs-lisp
 (after! mu4e
 (set-email-account! "Gmail"
@@ -584,7 +583,6 @@ Manage multiple =vterm= buffers.
 #+end_src
 
 Set bookmark for =Inbox= which excludes =Trash= folder
-
 #+begin_src emacs-lisp
 (after! mu4e
   (add-to-list 'mu4e-bookmarks
@@ -598,4 +596,15 @@ Fetch for new email for every 5 minutes.
 #+begin_src emacs-lisp
 (after! mu4e
   (setq mu4e-update-interval 300))
+#+end_src
+
+* Optiver
+This is something used only for Optiver.
+
+** Optiver-Fex
+Transient mode to run FEX scons commands.
+
+#+begin_src emacs-lisp
+(use-package! optiver-fex
+  :commands (optiver-fex-rerun-previous-command optiver-fex-dispatch))
 #+end_src
