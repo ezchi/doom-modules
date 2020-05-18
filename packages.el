@@ -20,5 +20,5 @@
 ;;
 ;; Verilog
 ;;
-(package! verilog-mode       :recipe (:host github :repo "ezchi/verilog-mode" :branch "lite" :files ("verilog-mode.el")))
+(package! verilog-mode       :recipe (:host github :repo "ezchi/verilog-mode" :branch "lite"))
 (package! yasnippets-verilog :recipe (:host github :repo "ezchi/yasnippets-verilog" :files ("*.el" ("snippets" ("verilog-mode" "snippets/verilog-mode/*")))))
