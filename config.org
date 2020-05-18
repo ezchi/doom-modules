@@ -239,10 +239,12 @@ Change =verilator= linter executable to =verilator_bin= to avoid crash.
   (setq-default flycheck-verilog-verilator-executable "verilator_bin"))
 #+end_src
 *** verilog-mode
+Disable =flycheck= until I figure out how to configure =verilator= correctly.
 #+begin_src emacs-lisp
 (use-package! verilog-mode
   :defer t
   :mode "\\.[s]?v[h]?\\'"
+  :hook (verilog-mode . (lambda () (flycheck-mode -1)))
   :config
   ;;  (add-hook 'verilog-mode-hook '(lambda()
   ;;                                  ;; Do not automatically insert "'" pair : 1'b0 -> 1'b0'
