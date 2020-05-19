@@ -101,6 +101,9 @@ Show =which-key= window faster.
 Add =roam= capture template.
 #+begin_src emacs-lisp
 (after! org-roam
+  (map! :localleader
+        :map org-mode-map
+        :desc "jump to index" "mj" #'org-roam-jump-to-index)
   (setq org-roam-ref-capture-templates
         '(("r" "ref" plain (function org-roam-capture--get-point)
            "%?"
@@ -110,6 +113,8 @@ Add =roam= capture template.
     - source :: ${ref}"
            :unnarrowed t))))
 #+end_src
+
+#+RESULTS:
 
 *** TODOs
 #+begin_src emacs-lisp
@@ -123,9 +128,9 @@ Add =roam= capture template.
 (after! org
   (map! :localleader
         :map org-mode-map
-        (:prefix ("s" . "subtree")
-         :desc "Demote subtree" "l" #'org-demote-subtree
-         :desc "Promote subtree" "h" #'org-promote-subtree)))
+        (:prefix ("s" . "+subtree")
+         :desc "demote subtree" "l" #'org-demote-subtree
+         :desc "promote subtree" "h" #'org-promote-subtree)))
 #+end_src
 
 ** VHDL
