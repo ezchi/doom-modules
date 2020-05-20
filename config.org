@@ -50,6 +50,10 @@ Show =which-key= window faster.
 (setq which-key-idle-delay 0.5)
 #+end_src
 
+Bind =z $= to =flyspell-=
+#+begin_src emacs-lisp
+(map! :n "z $" #'flyspell-correct-word-before-point)
+#+end_src
 * Languages
 ** Org
 *** Log & Drawer
