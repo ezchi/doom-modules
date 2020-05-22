@@ -186,6 +186,13 @@ See `http://vhdltool.cam'."
   ;; (add-to-list 'flycheck-checkers 'vhdl-tool)
 #+end_src
 
+I haven't found good solution to configure =vhdl-tool= as default checker. I
+will try to do it in =.dir-local.el= as
+#+begin_src emacs-lisp :tangle no
+((vhdl-mode
+  (flycheck-checker . 'vhdl-tool)))
+#+end_src
+
 Flycheck hook function to select =vhdl-tool= as checker.
 #+begin_src emacs-lisp
 (after! flycheck
