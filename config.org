@@ -134,7 +134,9 @@ Add =roam= capture template.
         :map org-mode-map
         (:prefix ("s" . "+subtree")
          :desc "demote subtree" "l" #'org-demote-subtree
-         :desc "promote subtree" "h" #'org-promote-subtree)))
+         :desc "promote subtree" "h" #'org-promote-subtree
+         :desc "move subtree up" "k" #'org-move-subtree-up
+         :desc "move subtree down" "j" #'org-move-subtree-down)))
 #+end_src
 
 ** VHDL
@@ -233,7 +235,7 @@ Helper functions to start/stop =vhdl-tool= server for linting.
       (error "Can not find %s @ %s" ec-vhdl-tool-config default-directory))
     (unless (ec-vhdl-tool--server-start-p buffer)
       (message "Starting vhdl-tool server")
-      (start-process buffer nil "vhdl-tool" "server"))))
+      (start-process "vhdl-tool-sever" buffer "vhdl-tool" "server"))))
 #+end_src
 
 *** Hooks
@@ -245,6 +247,12 @@ Enable LSP.
 
 #+begin_src emacs-lisp
 (after! vhdl-mode (add-hook! vhdl-mode #'ec-vhdl-init #'lsp #'ec-vhdl-tool-start-server))
+#+end_src
+
+*** Key bindings
+#+begin_src emacs-lisp :tangle no
+(map! :map vhdl-mode-map
+      :i "SPC" #'vhdl-electric-space)
 #+end_src
 
 ** Verilog
