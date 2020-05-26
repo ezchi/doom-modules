@@ -164,7 +164,8 @@ Add =roam= capture template.
      vhdl-underscore-is-part-of-word t
      vhdl-upper-case-constants t
      vhdl-upper-case-enum-values t)
-    (add-to-list 'vhdl-offsets-alist '(arglist-close . 0))))
+    (add-to-list 'vhdl-offsets-alist '(arglist-close . 0))
+    (advice-add 'lsp-hover :around #'ec-skip-lsp-hover-on-empty-line)))
 #+end_src
 
 *** VHDL-TOOL
@@ -247,6 +248,27 @@ Enable LSP.
 
 #+begin_src emacs-lisp
 (after! vhdl-mode (add-hook! vhdl-mode #'ec-vhdl-init #'lsp #'ec-vhdl-tool-start-server))
+#+end_src
+
+*** Functions
+vhdl-tool (v0.0.12 when added) would crash when get hover request on empty line.
+Add advice function to skip =lsp-hover= on empty line.
+
+**** ec--white-space-or-empty-line-p
+#+begin_src emacs-lisp
+(defun ec--whitespace-or-empty-line-p ()
+  "Return non-nil if current line is empty or whitespaces only."
+  (looking-at "^[[:space:]\n]*$"))
+#+end_src
+
+**** ec-skip-lsp-hover-on-empty-line
+#+begin_src emacs-lisp
+(defun ec-skip-lsp-hover-on-empty-line (f &rest args)
+  "Skip lsp-hover on empty or whitespaces only lines."
+  (if (ec--whitespace-or-empty-line)
+      (setq lsp--hover-saved-bounds nil
+            lsp--eldoc-saved-message nil)
+    (apply f args)))
 #+end_src
 
 *** Key bindings
