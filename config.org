@@ -193,7 +193,7 @@ Add =vhdl-tool= as flycheck checker.
 (after! flycheck
   (flycheck-define-checker vhdl-tool
     "A VHDL syntax checker, type checker and linter using VHDL-Tool.
-See `http://vhdltool.cam'."
+See `http://vhdltool.com'."
     :command ("vhdl-tool" "client" "lint" "--compact" source-inplace)
     :error-patterns
     ((warning line-start (file-name) ":" line ":" column ":w:" (message) line-end)
