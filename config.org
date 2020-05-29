@@ -55,6 +55,19 @@ Bind =z $= to =flyspell-=
 (map! :n "z $" #'flyspell-correct-word-before-point)
 #+end_src
 * Languages
+** C++
+*** Key bindings
+#+begin_src emacs-lisp
+(after! cc-mode
+  (map! :localleader
+        :map c++-mode-map
+        (:prefix ("g" . "+goto")
+         :desc "goto definition" "g" #'lsp-find-definition
+         :desc "goto declaration" "d" #'lsp-find-declaration
+         :desc "goto reference" "d" #'lsp-find-references
+         :desc "goto implementation" "i" #'lsp-find-implementation)))
+#+end_src
+
 ** Org
 *** Log & Drawer
 #+begin_src emacs-lisp
@@ -345,4 +358,38 @@ These are encrypted with gpg and are essentially set mostly by custom-*
   (epa-file-enable)
   (setq custom-file (concat doom-private-dir "local/private.el.gpg"))
   (load custom-file))
+#+end_src
+
+
+* Email
+
+#+begin_src emacs-lisp
+(after! mu4e
+(set-email-account! "Gmail"
+  '((mu4e-sent-folder       . "/[Gmail].Sent Mail")
+    (mu4e-drafts-folder     . "/[Gmail].Drafts")
+    (mu4e-trash-folder      . "/[Gmail].Trash")
+    (mu4e-refile-folder     . "/[Gmail].All Mail")
+    (smtpmail-smtp-server   . "smtp.gmail.com")
+    (smtpmail-smtp-service  . 587)
+    (smtpmail-smtp-user     . "Enze.Chi@gmail.com")
+    (mu4e-compose-signature . "\nEnze Chi"))
+  t))
+#+end_src
+
+Set bookmark for =Inbox= which excludes =Trash= folder
+
+#+begin_src emacs-lisp
+(after! mu4e
+  (add-to-list 'mu4e-bookmarks
+               (make-mu4e-bookmark
+                :name "Inbox"
+                :query "maildir:/INBOX"
+                :key ?i)))
+#+end_src
+
+Fetch for new email for every 5 minutes.
+#+begin_src emacs-lisp
+(after! mu4e
+  (setq mu4e-update-interval 300))
 #+end_src
