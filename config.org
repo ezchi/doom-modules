@@ -62,9 +62,9 @@ Bind =z $= to =flyspell-=
   (map! :localleader
         :map c++-mode-map
         (:prefix ("g" . "+goto")
-         :desc "goto definition" "g" #'lsp-find-definition
-         :desc "goto declaration" "d" #'lsp-find-declaration
-         :desc "goto reference" "d" #'lsp-find-references
+         :desc "goto definition"     "g" #'lsp-find-definition
+         :desc "goto declaration"    "d" #'lsp-find-declaration
+         :desc "goto reference"      "r" #'lsp-find-references
          :desc "goto implementation" "i" #'lsp-find-implementation)))
 #+end_src
 
