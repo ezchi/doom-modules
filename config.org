@@ -69,6 +69,18 @@ Bind =z $= to =flyspell-=
 #+end_src
 
 ** Org
+*** Babel
+**** http
+Make http request within org-mode babel with [[https://github.com/zweifisch/ob-http][ob-http]].
+#+begin_src emacs-lisp
+(after! org
+ (add-to-list 'org-babel-load-languages '(http . t)))
+#+end_src
+
+#+begin_src http :pretty :tangle no
+GET https://www.google.com
+#+end_src
+
 *** Log & Drawer
 #+begin_src emacs-lisp
 (after! org

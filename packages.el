@@ -22,3 +22,8 @@
 ;;
 (package! verilog-mode       :recipe (:host github :repo "ezchi/verilog-mode" :branch "lite"))
 (package! yasnippets-verilog :recipe (:host github :repo "ezchi/yasnippets-verilog" :files ("*.el" ("snippets" ("verilog-mode" "snippets/verilog-mode/*")))))
+
+;;
+;; Org
+;;
+(package! ob-http :recipe (:host github :repo "zweifisch/ob-http"))
