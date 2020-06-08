@@ -27,3 +27,8 @@
 ;; Org
 ;;
 (package! ob-http :recipe (:host github :repo "zweifisch/ob-http"))
+
+;;
+;; Terminal
+;;
+(package! multi-vterm)

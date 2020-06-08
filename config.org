@@ -81,6 +81,19 @@ Make http request within org-mode babel with [[https://github.com/zweifisch/ob-h
 GET https://www.google.com
 #+end_src
 
+**** Functions
+***** Kill session
+#+begin_src emacs-lisp
+(defun ec-org-babel-kill-session ()
+  "Kill session for current code block."
+  (interactive)
+  (unless (org-in-src-block-p)
+    (error "You must be in a src-block to run this command"))
+  (save-window-excursion
+    (org-babel-switch-to-session)
+    (kill-buffer)))
+#+end_src
+
 *** Log & Drawer
 #+begin_src emacs-lisp
 (after! org
@@ -94,36 +107,38 @@ GET https://www.google.com
 
 *** Property
 #+begin_src emacs-lisp
-(after!
+(after! org
   (setq org-use-property-inheritance t
         org-catch-invisible-edits 'smart))
 #+end_src
 
 *** Agenda
 #+begin_src emacs-lisp
-(after!
+(after! org
+  (add-to-list 'org-modules 'org-habit)
   (setq org-agenda-skip-scheduled-if-done t
         org-agenda-skip-deadline-if-done t))
 #+end_src
 
 *** Export
 #+begin_src emacs-lisp
-(after! (setq org-export-backends '(ascii html icalendar latex md odt pandoc pdf)))
+(after! org
+  (setq org-export-backends '(ascii html icalendar latex md odt pandoc pdf)))
 #+end_src
 
 *** Roam
 #+begin_src emacs-lisp
-(after!
+(after! org
   (when (featurep! +roam)
     (setq org-roam-directory (expand-file-name "roam" org-directory))
-    (use-package! org-journal
-      :bind
-      ("SPC n j" . org-journal-new-entry)
-      :custom
-      (org-journal-dir org-roam-directory)
-      (org-journal-date-prefix "#+TITLE: ")
-      (org-journal-file-format "%Y-%m-%d.org")
-      (org-journal-date-format "%A, %d %B %Y"))
+    ;; (use-package! org-journal
+    ;;   :bind
+    ;;   ("SPC n j" . org-journal-new-entry)
+    ;;   :custom
+    ;;   (org-journal-dir org-roam-directory)
+    ;;   (org-journal-date-prefix "#+TITLE: ")
+    ;;   (org-journal-file-format "%Y-%m-%d.org")
+      ;; (org-journal-date-format "%A, %d %B %Y"))
     (setq org-journal-enable-agenda-integration t)))
 #+end_src
 
@@ -147,7 +162,8 @@ Add =roam= capture template.
 
 *** TODOs
 #+begin_src emacs-lisp
-(after! (setq org-enforce-todo-checkbox-dependencies t))
+(after! org
+  (setq org-enforce-todo-checkbox-dependencies t))
 #+end_src
 
 *** Key bindings
@@ -297,10 +313,6 @@ Add advice function to skip =lsp-hover= on empty line.
 #+end_src
 
 *** Key bindings
-#+begin_src emacs-lisp :tangle no
-(map! :map vhdl-mode-map
-      :i "SPC" #'vhdl-electric-space)
-#+end_src
 
 ** Verilog
 *** Flycheck
@@ -371,7 +383,45 @@ These are encrypted with gpg and are essentially set mostly by custom-*
   (setq custom-file (concat doom-private-dir "local/private.el.gpg"))
   (load custom-file))
 #+end_src
+** Terminal
+*** mulit-term
+Manage multiple =vterm= buffers.
 
+#+begin_src emacs-lisp
+(use-package! multi-vterm
+  :config
+  (add-hook 'vterm-mode-hook
+            (lambda ()
+              (setq-local evil-insert-state-cursor 'box)
+              (evil-insert-state)))
+  (define-key vterm-mode-map [return]                      #'vterm-send-return)
+  (setq vterm-keymap-exceptions nil)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-e")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-f")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-a")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-v")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-b")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-w")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-u")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-d")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-n")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-m")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-p")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-j")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-k")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-r")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-t")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-g")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-c")      #'vterm--self-insert)
+  (evil-define-key 'insert vterm-mode-map (kbd "C-SPC")    #'vterm--self-insert)
+  (evil-define-key 'normal vterm-mode-map (kbd "C-d")      #'vterm--self-insert)
+  (evil-define-key 'normal vterm-mode-map (kbd ",c")       #'multi-vterm)
+  (evil-define-key 'normal vterm-mode-map (kbd ",n")       #'multi-vterm-next)
+  (evil-define-key 'normal vterm-mode-map (kbd ",p")       #'multi-vterm-prev)
+  (evil-define-key 'normal vterm-mode-map (kbd "i")        #'evil-insert-resume)
+  (evil-define-key 'normal vterm-mode-map (kbd "o")        #'evil-insert-resume)
+  (evil-define-key 'normal vterm-mode-map (kbd "<return>") #'evil-insert-resume))
+#+end_src
 
 * Email
 
