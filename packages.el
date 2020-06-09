@@ -28,7 +28,10 @@
 ;;
 (package! ob-http :recipe (:host github :repo "zweifisch/ob-http"))
 
-;;
+
+;; Tools
+;; Search
+(package! rg)
+
 ;; Terminal
-;;
 (package! multi-vterm)

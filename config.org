@@ -395,6 +395,16 @@ These are encrypted with gpg and are essentially set mostly by custom-*
   (setq custom-file (concat doom-private-dir "local/private.el.gpg"))
   (load custom-file))
 #+end_src
+** Search
+*** rg
+Needs a solution to use =ripgrep= to search =gitignore= files in a project.
+
+#+begin_src emacs-lisp
+(use-package! rg)
+(map! :n "SPC s / m" #'rg-menu
+      :n "SPC s / r" #'rg)
+#+end_src
+
 ** Terminal
 *** mulit-term
 Manage multiple =vterm= buffers.
