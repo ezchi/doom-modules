@@ -284,7 +284,7 @@ Helper functions to start/stop =vhdl-tool= server for linting.
 Somehow the =lsp-vhdl= is broken from =lsp-mode=, create =lsp-client= manually
 here until upstream fix it.
 #+begin_src emacs-lisp
-(after! lsp
+(after! lsp-mode
   (lsp-register-client
    (make-lsp-client :new-connection (lsp-stdio-connection '("vhdl-tool" "lsp"))
                     :major-modes '(vhdl-mode)
@@ -293,14 +293,8 @@ here until upstream fix it.
                     :server-id 'lsp-vhdl)))
 #+end_src
 
-Enable LSP and Flycheck.
 #+begin_src emacs-lisp
-(after! lsp
-  (add-hook! lsp-mode #'ec-vhdl-setup-flycheck-after-lsp))
-#+end_src
-
-#+begin_src emacs-lisp
-(after! vhdl-mode (add-hook! vhdl-mode #'ec-vhdl-init #'lsp #'ec-vhdl-tool-start-server))
+(after! vhdl-mode (add-hook! vhdl-mode #'ec-vhdl-init #'lsp #'ec-vhdl-tool-start-server'))
 #+end_src
 
 *** Functions
