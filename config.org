@@ -294,7 +294,7 @@ here until upstream fix it.
 #+end_src
 
 #+begin_src emacs-lisp
-(after! vhdl-mode (add-hook! vhdl-mode #'ec-vhdl-init #'lsp #'ec-vhdl-tool-start-server'))
+(after! vhdl-mode (add-hook! vhdl-mode #'ec-vhdl-init #'lsp #'ec-vhdl-tool-start-server))
 #+end_src
 
 *** Functions
