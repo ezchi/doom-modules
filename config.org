@@ -120,6 +120,14 @@ GET https://www.google.com
         org-agenda-skip-deadline-if-done t))
 #+end_src
 
+Add "*.org.gpg" to agenda file list.
+#+begin_src emacs-lisp
+(after! org
+  (unless (string-match-p "\\.gpg" org-agenda-file-regexp)
+    (setq org-agenda-file-regexp
+          (replace-regexp-in-string "\\\\\\.org" "\\\\.org\\\\(\\\\.gpg\\\\)?"
+                                    org-agenda-file-regexp))))
+#+end_src
 *** Export
 #+begin_src emacs-lisp
 (after! org
