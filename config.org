@@ -69,6 +69,18 @@ Bind =z $= to =flyspell-=
 #+end_src
 
 ** Org
+*** Capture templates
+Add weekly review capture template.
+#+begin_src emacs-lisp
+(after! org
+  (setq +org-capture-review-file (expand-file-name "reviews.org" org-directory))
+  (mapc (lambda (template)
+          (add-to-list 'org-capture-templates template))
+        '(("r" "Review")
+          ("rw" "Weekly" entry (file+olp+datetree +org-capture-review-file "Weekly") "* %U\n%?" :tree-type week)
+          ("rm" "Monthly" entry (file+olp+datetree +org-capture-review-file "Monthly") "* %U\n%?")
+          ("ry" "Yearly" entry (file+olp+datetree +org-capture-review-file "Yearly") "* %U\n%?"))))
+#+end_src
 *** Babel
 **** http
 Make http request within org-mode babel with [[https://github.com/zweifisch/ob-http][ob-http]].
@@ -128,6 +140,22 @@ Add "*.org.gpg" to agenda file list.
           (replace-regexp-in-string "\\\\\\.org" "\\\\.org\\\\(\\\\.gpg\\\\)?"
                                     org-agenda-file-regexp))))
 #+end_src
+
+Add agenda command for weekly review.
+#+begin_src emacs-lisp
+(setq org-agenda-custom-commands
+      '(("W" "Completed and/or deferred tasks from previous week"
+         ((agenda "" ((org-agenda-span 7)
+                      (org-agenda-start-day "-7d")
+                      (org-agenda-show-log t)))
+          (todo "")
+          (todo "DONE")
+          (todo "[X]")))))
+#+end_src
+
+#+RESULTS:
+| W | Completed and/or deferred tasks from previous week | ((agenda  ((org-agenda-span 7) (org-agenda-start-day -7d) (org-agenda-show-log t))) (todo ) (todo DONE) (todo [X])) |
+
 *** Export
 #+begin_src emacs-lisp
 (after! org
