@@ -69,18 +69,31 @@ Bind =z $= to =flyspell-=
 #+end_src
 
 ** Org
-*** Capture templates
-Add weekly review capture template.
+*** Review
+**** Capture templates
+Add review capture template.
 #+begin_src emacs-lisp
 (after! org
-  (setq +org-capture-review-file (expand-file-name "reviews.org" org-directory))
+  (setq ec/org-capture-review-file (expand-file-name "reviews.org" org-directory))
   (mapc (lambda (template)
           (add-to-list 'org-capture-templates template))
         '(("r" "Review")
-          ("rw" "Weekly" entry (file+olp+datetree +org-capture-review-file "Weekly") "* %U\n%?" :tree-type week)
-          ("rm" "Monthly" entry (file+olp+datetree +org-capture-review-file "Monthly") "* %U\n%?")
-          ("ry" "Yearly" entry (file+olp+datetree +org-capture-review-file "Yearly") "* %U\n%?"))))
+          ("rw" "Weekly" entry (file+olp+datetree ec/org-capture-review-file "Weekly") "* %U\n%?" :tree-type week)
+          ("rm" "Monthly" entry (file+olp+datetree ec/org-capture-review-file "Monthly") "* %U\n%?")
+          ("ry" "Yearly" entry (file+olp+datetree ec/org-capture-review-file "Yearly") "* %U\n%?"))))
 #+end_src
+
+**** Helper functions
+
+***** Open review file in other window
+#+begin_src emacs-lisp
+(after! org
+  (defun ec/open-review-in-other-window ()
+    "Open review org file in other-window."
+    (interactive)
+    (find-file-other-window ec/org-capture-review-file)))
+#+end_src
+
 *** Babel
 **** http
 Make http request within org-mode babel with [[https://github.com/zweifisch/ob-http][ob-http]].
@@ -143,18 +156,15 @@ Add "*.org.gpg" to agenda file list.
 
 Add agenda command for weekly review.
 #+begin_src emacs-lisp
-(setq org-agenda-custom-commands
-      '(("W" "Completed and/or deferred tasks from previous week"
-         ((agenda "" ((org-agenda-span 7)
-                      (org-agenda-start-day "-7d")
-                      (org-agenda-show-log t)))
-          (todo "")
-          (todo "DONE")
-          (todo "[X]")))))
+(after! org-agenda
+  (setq org-agenda-custom-commands
+        '(("r" . "Review")
+          ("rw" "Completed and/or deferred tasks from previous week"
+            ((agenda "" ((org-agenda-span 7)
+                         (org-agenda-start-day "-7d")
+                         (org-agenda-show-log t))))
+            ((org-agenda-compact-blocks t))))))
 #+end_src
-
-#+RESULTS:
-| W | Completed and/or deferred tasks from previous week | ((agenda  ((org-agenda-span 7) (org-agenda-start-day -7d) (org-agenda-show-log t))) (todo ) (todo DONE) (todo [X])) |
 
 *** Export
 #+begin_src emacs-lisp
@@ -203,7 +213,6 @@ Add =roam= capture template.
 #+end_src
 
 *** Key bindings
-
 **** subtree
 #+begin_src emacs-lisp
 (after! org

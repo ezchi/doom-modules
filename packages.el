@@ -35,3 +35,5 @@
 
 ;; Terminal
 (package! multi-vterm)
+
+(package! ecdate :recipe (:host github :repo "ezchi/ecdate"))
