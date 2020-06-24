@@ -364,7 +364,52 @@ Add advice function to skip =lsp-hover= on empty line.
 #+end_src
 
 *** Key bindings
+#+begin_src emacs-lisp
+(after! vhdl-mode
+  (map! :localleader
+        (:prefix ("t" . "+template")
+         "ar" #'vhdl-template-architecture
+         "at" #'vhdl-template-assert
 
+         "bl" #'vhdl-template-block
+
+         "ca" #'vhdl-template-case-is
+         "co" #'vhdl-template-constant
+
+         "ei" #'vhdl-template-elsif
+         "el" #'vhdl-template-else
+         "en" #'vhdl-template-entity
+
+         "fb" #'vhdl-template-function-body
+         "fd" #'vhdl-template-function-decl
+         "fl" #'vhdl-template-for-loop
+
+         "ge" #'vhdl-template-generic
+
+         "fg" #'vhdl-template-for-generate
+         "ig" #'vhdl-template-if-generate
+
+         "it" #'vhdl-template-if-then
+
+         "li" #'vhdl-template-library
+
+         "pc" #'vhdl-template-process-comb
+         "po" #'vhdl-template-port
+         "ps" #'vhdl-template-process-seq
+
+         "si" #'vhdl-template-signal
+         "su" #'vhdl-template-subtype
+
+         "ty" #'vhdl-template-type
+
+         "us" #'vhdl-template-use
+
+         "va" #'vhdl-template-variable
+
+         "Pn" #'vhdl-template-package-numeric-std
+         "Ps" #'vhdl-template-package-std-logic-1164
+         )))
+#+end_src
 ** Verilog
 *** Flycheck
 Change =verilator= linter executable to =verilator_bin= to avoid crash.
