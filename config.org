@@ -367,6 +367,7 @@ Add advice function to skip =lsp-hover= on empty line.
 #+begin_src emacs-lisp
 (after! vhdl-mode
   (map! :localleader
+        :map vhdl-mode-map
         (:prefix ("t" . "+template")
          "ar" #'vhdl-template-architecture
          "at" #'vhdl-template-assert
