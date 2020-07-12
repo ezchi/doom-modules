@@ -505,7 +505,7 @@ Needs a solution to use =ripgrep= to search =gitignore= files in a project.
 *** mulit-term
 Manage multiple =vterm= buffers.
 
-#+begin_src emacs-lisp :tangle ro
+#+begin_src emacs-lisp :tangle no
 (use-package! multi-vterm
   :config
   (add-hook 'vterm-mode-hook
