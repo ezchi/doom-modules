@@ -67,6 +67,15 @@ Bind =z $= to =flyspell-=
          :desc "goto reference"      "r" #'lsp-find-references
          :desc "goto implementation" "i" #'lsp-find-implementation)))
 #+end_src
+** Go
+Format code before save.
+#+begin_src emacs-lisp
+(after! go-mode
+  (add-hook! 'before-save-hook #'gofmt-before-save))
+#+end_src
+
+#+RESULTS:
+| gofmt-before-save |
 
 ** Org
 *** Review
@@ -98,8 +107,10 @@ Add review capture template.
 **** http
 Make http request within org-mode babel with [[https://github.com/zweifisch/ob-http][ob-http]].
 #+begin_src emacs-lisp
-(after! org
- (add-to-list 'org-babel-load-languages '(http . t)))
+(use-package! ob-http
+  :init
+  (after! org
+    (add-to-list 'org-babel-load-languages '(http . t))))
 #+end_src
 
 #+begin_src http :pretty :tangle no
@@ -494,7 +505,7 @@ Needs a solution to use =ripgrep= to search =gitignore= files in a project.
 *** mulit-term
 Manage multiple =vterm= buffers.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle ro
 (use-package! multi-vterm
   :config
   (add-hook 'vterm-mode-hook
