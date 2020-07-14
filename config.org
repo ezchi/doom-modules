@@ -353,6 +353,12 @@ here until upstream fix it.
 (after! vhdl-mode (add-hook! vhdl-mode #'ec-vhdl-init #'lsp #'ec-vhdl-tool-start-server))
 #+end_src
 
+*** yasnippets-vhdl
+#+begin_src emacs-lisp
+(use-package! yasnippets-vhdl
+  :defer t)
+#+end_src
+
 *** Functions
 vhdl-tool (v0.0.12 when added) would crash when get hover request on empty line.
 Add advice function to skip =lsp-hover= on empty line.

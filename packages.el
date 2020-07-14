@@ -16,6 +16,7 @@
 ;; VHDL
 ;;
 (package! vhdl-mode :recipe (:host github :repo "ezchi/vhdl-mode" :branch "ec-release"))
+(package! yasnippets-vhdl :recipe (:host github :repo "ezchi/yasnippets-vhdl" :files ("*.el" ("snippets" ("vhdl-mode" "snippets/vhdl-mode/*")))))
 
 ;;
 ;; Verilog
