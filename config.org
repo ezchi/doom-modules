@@ -54,6 +54,11 @@ Bind =z $= to =flyspell-=
 #+begin_src emacs-lisp
 (map! :n "z $" #'flyspell-correct-word-before-point)
 #+end_src
+
+#+begin_src emacs-lisp
+(map! :leader
+      :n "j l" #'evil-avy-goto-line)
+#+end_src
 * Languages
 ** C++
 *** Key bindings
