@@ -183,7 +183,7 @@ Add agenda command for weekly review.
 #+end_src
 
 *** Export
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 (after! org
   (setq org-export-backends '(ascii html icalendar latex md odt pandoc pdf)))
 #+end_src
@@ -435,17 +435,20 @@ Add advice function to skip =lsp-hover= on empty line.
 #+end_src
 ** Verilog
 *** Flycheck
-Change =verilator= linter executable to =verilator_bin= to avoid crash.
+The =verilator= does not working well with verification code. Disable =verilog-verilator= checker until it usable.
+
 #+begin_src emacs-lisp
 (after! flycheck
-  (setq-default flycheck-verilog-verilator-executable "verilator_bin"))
+  (delq! 'verilog-verilator flycheck-checkers))
 #+end_src
+
 *** verilog-mode
 #+begin_src emacs-lisp
 (use-package! verilog-mode
   :defer t
   :mode "\\.[s]?v[h]?\\'"
-  :hook (disable-single-quote-sp-pair)
+  :hook ((verilog-mode . disable-single-quote-sp-pair)
+         (verilog-mode . lsp))
   :config
   (defun disable-single-quote-sp-pair ()
     "Disable single quote sp-pair which does not work well for verilog-mode.
@@ -453,6 +456,18 @@ It is bad example for automatically inserting single quote pair:
   a = 1'b0;
   b = '0;"
     (sp-local-pair 'verilog-mode "'" nil :actions nil))
+
+  (require 'lsp)
+  (lsp-register-client
+   (make-lsp-client :new-connection (lsp-stdio-connection '("svls"))
+                    :major-modes '(verilog-mode)
+                    :priority 1
+                    :server-id 'lsp-svls))
+  (add-to-list 'lsp-language-id-configuration '(verilog-mode . "verilog"))
+
+  (require 'flycheck)
+  (add-to-list 'flycheck-disabled-checkers 'verilog-verilator)
+
   (setq verilog-align-ifelse nil)
   (setq verilog-auto-indent-on-newline t)
   (setq verilog-auto-lineup 'assignments)
@@ -478,7 +493,7 @@ It is bad example for automatically inserting single quote pair:
 #+end_src
 *** SystemVerilog Language Server
 Use [[https://github.com/dalance/svls][svls]] as SystemVerilog Language Server.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 (after! lsp
   (lsp-register-client
    (make-lsp-client :new-connection (lsp-stdio-connection '("svls"))
