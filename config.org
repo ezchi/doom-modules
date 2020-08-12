@@ -229,17 +229,6 @@ Add =roam= capture template.
 #+end_src
 
 *** Key bindings
-**** subtree
-#+begin_src emacs-lisp
-(after! org
-  (map! :localleader
-        :map org-mode-map
-        (:prefix ("s" . "+subtree")
-         :desc "demote subtree" "l" #'org-demote-subtree
-         :desc "promote subtree" "h" #'org-promote-subtree
-         :desc "move subtree up" "k" #'org-move-subtree-up
-         :desc "move subtree down" "j" #'org-move-subtree-down)))
-#+end_src
 
 ** VHDL
 *** Initialization
