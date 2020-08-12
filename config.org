@@ -35,8 +35,10 @@ Display date and time in 24h format.
 (display-time-mode t)
 #+end_src
 
-#+RESULTS:
-: t
+** Full screen at startup
+#+begin_src emacs-lisp
+(add-to-list 'initial-frame-alist '(fullscreen . fullscreen))
+#+end_src
 
 * Key bindings
 Change local leader key to =,=.
