@@ -37,7 +37,7 @@ Display date and time in 24h format.
 
 ** Full screen at startup
 #+begin_src emacs-lisp
-(add-to-list 'initial-frame-alist '(fullscreen . fullscreen))
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
 #+end_src
 
 * Key bindings
