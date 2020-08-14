@@ -233,6 +233,10 @@ Add =roam= capture template.
 
 *** Key bindings
 
+** Python
+#+begin_src emacs-lisp
+(setq python-shell-completion-native-enable nil)
+#+end_src
 ** VHDL
 *** Initialization
 #+begin_src emacs-lisp
