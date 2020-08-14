@@ -185,9 +185,10 @@ Add agenda command for weekly review.
 #+end_src
 
 *** Export
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
 (after! org
-  (setq org-export-backends '(ascii html icalendar latex md odt pandoc pdf)))
+  (setq org-latex-listings 'minted)
+  (setq org-latex-packages-alist '(("" "minted"))))
 #+end_src
 
 *** Roam
