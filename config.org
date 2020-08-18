@@ -10,6 +10,20 @@
 #+select_tags: export
 #+exclude_tags: noexport
 #+creator: Emacs 26.3 (Org mode 9.4)
+#+startup: overview
+
+* System Information
+#+begin_src emacs-lisp
+(defun ec/at-home-p ()
+  "Return non-nil if running Emacs on personal computer."
+  (interactive)
+  (string= (system-name) "Enzes-MacBook-Pro.local"))
+
+(defun office-p ()
+  "Return non-nil if running Emacs not on personal computer."
+  (interactive)
+  (not (at-home-p)))
+#+end_src
 
 * User Information
 #+begin_src emacs-lisp
@@ -233,6 +247,14 @@ Add =roam= capture template.
 
 *** Key bindings
 
+
+*** Packages
+#+begin_src emacs-lisp :tangle packages.el
+(package! ob-http
+  :recipe (:host github
+           :repo "zweifisch/ob-http"))
+#+end_src
+
 ** Python
 #+begin_src emacs-lisp
 (setq python-shell-completion-native-enable nil)
@@ -429,6 +451,23 @@ Add advice function to skip =lsp-hover= on empty line.
          "Ps" #'vhdl-template-package-std-logic-1164
          )))
 #+end_src
+*** Packages
+**** vhdl-mode
+#+begin_src emacs-lisp :tangle packages.el
+(package! vhdl-mode
+  :recipe (:host github
+           :repo "ezchi/vhdl-mode"
+           :branch "ec-release"))
+#+end_src
+
+**** yasnippets-vhdl
+#+begin_src emacs-lisp :tangle packages.el
+(package! yasnippets-vhdl
+  :recipe (:host github
+           :repo "ezchi/yasnippets-vhdl"
+           :files ("*.el" ("snippets" ("vhdl-mode" "snippets/vhdl-mode/*")))))
+#+end_src
+
 ** Verilog
 *** Flycheck
 The =verilator= does not working well with verification code. Disable =verilog-verilator= checker until it usable.
@@ -504,6 +543,23 @@ Use [[https://github.com/dalance/svls][svls]] as SystemVerilog Language Server.
   :defer t)
 #+end_src
 
+*** Packages
+**** verilog-mode
+#+begin_src emacs-lisp :tangle packages.el
+(package! verilog-mode
+  :recipe (:host github
+           :repo "ezchi/verilog-mode"
+           :branch "lite"))
+#+end_src
+
+**** yasnippets-verilog
+#+begin_src emacs-lisp :tangle packages.el
+(package! yasnippets-verilog
+  :recipe (:host github
+           :repo "ezchi/yasnippets-verilog"
+           :files ("*.el" ("snippets" ("verilog-mode" "snippets/verilog-mode/*")))))
+#+end_src
+
 * Tools
 ** Git
 *** git-auto-commit-mode
@@ -512,6 +568,11 @@ Use [[https://github.com/dalance/svls][svls]] as SystemVerilog Language Server.
   :commands (git-auto-commit-mode)
   :config
   (setq gac-debounce-interval 3600))
+#+end_src
+
+*** Packages
+#+begin_src emacs-lisp :tangle packages.el
+(package! git-auto-commit-mode)
 #+end_src
 ** GPG :noexport:
 These are encrypted with gpg and are essentially set mostly by custom-*
@@ -603,4 +664,27 @@ Fetch for new email for every 5 minutes.
 #+begin_src emacs-lisp
 (after! mu4e
   (setq mu4e-update-interval 300))
+#+end_src
+
+* Packages
+** org-pandoc-import
+[[https://github.com/tecosaur/org-pandoc-import][Org Pandoc Import]]
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-pandoc-import
+  :recipe (:host github
+           :repo "tecosaur/org-pandoc-import"
+           :files ("*.el" "filters" "preprocessors")))
+#+end_src
+
+** rg
+#+begin_src emacs-lisp :tangle packages.el
+(package! rg)
+#+end_src
+
+** ecdate
+#+begin_src emacs-lisp :tangle packages.el
+(package! ecdate
+  :recipe (:host github
+           :repo "ezchi/ecdate"))
 #+end_src
