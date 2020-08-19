@@ -12,19 +12,6 @@
 #+creator: Emacs 26.3 (Org mode 9.4)
 #+startup: overview
 
-* System Information
-#+begin_src emacs-lisp
-(defun ec/at-home-p ()
-  "Return non-nil if running Emacs on personal computer."
-  (interactive)
-  (string= (system-name) "Enzes-MacBook-Pro.local"))
-
-(defun ec/at-office-p ()
-  "Return non-nil if running Emacs not on personal computer."
-  (interactive)
-  (not (ec/at-home-p)))
-#+end_src
-
 * User Information
 #+begin_src emacs-lisp
 (setq user-full-name "Enze Chi")
