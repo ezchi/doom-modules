@@ -36,9 +36,9 @@
 * Appearance
 ** Fonts
 #+begin_src emacs-lisp
-(if IS-MAC
-    (setq doom-font (font-spec :family "Go Mono for Powerline" :size 12))
-  (setq doom-font (font-spec :family "Go Mono for Powerline" :size 22)))
+(if (> (x-display-pixel-width) 2000)
+    (setq doom-font (font-spec :family "Go Mono for Powerline" :size 22))
+  (setq doom-font (font-spec :family "Go Mono for Powerline" :size 12)))
 #+end_src
 
 ** Display time with date
