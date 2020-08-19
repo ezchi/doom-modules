@@ -19,10 +19,10 @@
   (interactive)
   (string= (system-name) "Enzes-MacBook-Pro.local"))
 
-(defun office-p ()
+(defun ec/at-office-p ()
   "Return non-nil if running Emacs not on personal computer."
   (interactive)
-  (not (at-home-p)))
+  (not (ec/at-home-p)))
 #+end_src
 
 * User Information
@@ -83,10 +83,10 @@ Bind =z $= to =flyspell-=
   (map! :localleader
         :map c++-mode-map
         (:prefix ("g" . "+goto")
-         :desc "goto definition"     "g" #'lsp-find-definition
-         :desc "goto declaration"    "d" #'lsp-find-declaration
-         :desc "goto reference"      "r" #'lsp-find-references
-         :desc "goto implementation" "i" #'lsp-find-implementation)))
+                 :desc "goto definition"     "g" #'lsp-find-definition
+                 :desc "goto declaration"    "d" #'lsp-find-declaration
+                 :desc "goto reference"      "r" #'lsp-find-references
+                 :desc "goto implementation" "i" #'lsp-find-implementation)))
 #+end_src
 ** Go
 Format code before save.
@@ -192,10 +192,10 @@ Add agenda command for weekly review.
   (setq org-agenda-custom-commands
         '(("r" . "Review")
           ("rw" "Completed and/or deferred tasks from previous week"
-            ((agenda "" ((org-agenda-span 7)
-                         (org-agenda-start-day "-7d")
-                         (org-agenda-show-log t))))
-            ((org-agenda-compact-blocks t))))))
+           ((agenda "" ((org-agenda-span 7)
+                        (org-agenda-start-day "-7d")
+                        (org-agenda-show-log t))))
+           ((org-agenda-compact-blocks t))))))
 #+end_src
 
 *** Export
@@ -217,7 +217,7 @@ Add agenda command for weekly review.
     ;;   (org-journal-dir org-roam-directory)
     ;;   (org-journal-date-prefix "#+TITLE: ")
     ;;   (org-journal-file-format "%Y-%m-%d.org")
-      ;; (org-journal-date-format "%A, %d %B %Y"))
+    ;; (org-journal-date-format "%A, %d %B %Y"))
     (setq org-journal-enable-agenda-integration t)))
 #+end_src
 
@@ -252,7 +252,7 @@ Add =roam= capture template.
 #+begin_src emacs-lisp :tangle packages.el
 (package! ob-http
   :recipe (:host github
-           :repo "zweifisch/ob-http"))
+                 :repo "zweifisch/ob-http"))
 #+end_src
 
 ** Python
@@ -283,7 +283,7 @@ Add =roam= capture template.
      vhdl-standard '(8 (math))
      vhdl-underscore-is-part-of-word t
      vhdl-upper-case-constants t
-     vhdl-upper-case-enum-values t)
+     vhdl-upper-case-enum-values nil)
     (add-to-list 'vhdl-offsets-alist '(arglist-close . 0))
     (advice-add 'lsp-hover :around #'ec-skip-lsp-hover-on-empty-line)))
 #+end_src
@@ -306,7 +306,7 @@ See `http://vhdltool.com'."
     ((warning line-start (file-name) ":" line ":" column ":w:" (message) line-end)
      (error line-start (file-name) ":" line ":" column ":e:" (message) line-end))
     :modes vhdl-mode))
-  ;; (add-to-list 'flycheck-checkers 'vhdl-tool)
+;; (add-to-list 'flycheck-checkers 'vhdl-tool)
 #+end_src
 
 I haven't found good solution to configure =vhdl-tool= as default checker. I
@@ -397,7 +397,7 @@ Add advice function to skip =lsp-hover= on empty line.
 #+begin_src emacs-lisp
 (defun ec-skip-lsp-hover-on-empty-line (f &rest args)
   "Skip lsp-hover on empty or whitespaces only lines."
-  (if (ec--whitespace-or-empty-line)
+  (if (ec--whitespace-or-empty-line-p)
       (setq lsp--hover-saved-bounds nil
             lsp--eldoc-saved-message nil)
     (apply f args)))
@@ -409,63 +409,63 @@ Add advice function to skip =lsp-hover= on empty line.
   (map! :localleader
         :map vhdl-mode-map
         (:prefix ("t" . "+template")
-         "ar" #'vhdl-template-architecture
-         "at" #'vhdl-template-assert
+                 "ar" #'vhdl-template-architecture
+                 "at" #'vhdl-template-assert
 
-         "bl" #'vhdl-template-block
+                 "bl" #'vhdl-template-block
 
-         "ca" #'vhdl-template-case-is
-         "co" #'vhdl-template-constant
+                 "ca" #'vhdl-template-case-is
+                 "co" #'vhdl-template-constant
 
-         "ei" #'vhdl-template-elsif
-         "el" #'vhdl-template-else
-         "en" #'vhdl-template-entity
+                 "ei" #'vhdl-template-elsif
+                 "el" #'vhdl-template-else
+                 "en" #'vhdl-template-entity
 
-         "fb" #'vhdl-template-function-body
-         "fd" #'vhdl-template-function-decl
-         "fl" #'vhdl-template-for-loop
+                 "fb" #'vhdl-template-function-body
+                 "fd" #'vhdl-template-function-decl
+                 "fl" #'vhdl-template-for-loop
 
-         "ge" #'vhdl-template-generic
+                 "ge" #'vhdl-template-generic
 
-         "fg" #'vhdl-template-for-generate
-         "ig" #'vhdl-template-if-generate
+                 "fg" #'vhdl-template-for-generate
+                 "ig" #'vhdl-template-if-generate
 
-         "it" #'vhdl-template-if-then
+                 "it" #'vhdl-template-if-then
 
-         "li" #'vhdl-template-library
+                 "li" #'vhdl-template-library
 
-         "pc" #'vhdl-template-process-comb
-         "po" #'vhdl-template-port
-         "ps" #'vhdl-template-process-seq
+                 "pc" #'vhdl-template-process-comb
+                 "po" #'vhdl-template-port
+                 "ps" #'vhdl-template-process-seq
 
-         "si" #'vhdl-template-signal
-         "su" #'vhdl-template-subtype
+                 "si" #'vhdl-template-signal
+                 "su" #'vhdl-template-subtype
 
-         "ty" #'vhdl-template-type
+                 "ty" #'vhdl-template-type
 
-         "us" #'vhdl-template-use
+                 "us" #'vhdl-template-use
 
-         "va" #'vhdl-template-variable
+                 "va" #'vhdl-template-variable
 
-         "Pn" #'vhdl-template-package-numeric-std
-         "Ps" #'vhdl-template-package-std-logic-1164
-         )))
+                 "Pn" #'vhdl-template-package-numeric-std
+                 "Ps" #'vhdl-template-package-std-logic-1164
+                 )))
 #+end_src
 *** Packages
 **** vhdl-mode
 #+begin_src emacs-lisp :tangle packages.el
 (package! vhdl-mode
   :recipe (:host github
-           :repo "ezchi/vhdl-mode"
-           :branch "ec-release"))
+                 :repo "ezchi/vhdl-mode"
+                 :branch "ec-release"))
 #+end_src
 
 **** yasnippets-vhdl
 #+begin_src emacs-lisp :tangle packages.el
 (package! yasnippets-vhdl
   :recipe (:host github
-           :repo "ezchi/yasnippets-vhdl"
-           :files ("*.el" ("snippets" ("vhdl-mode" "snippets/vhdl-mode/*")))))
+                 :repo "ezchi/yasnippets-vhdl"
+                 :files ("*.el" ("snippets" ("vhdl-mode" "snippets/vhdl-mode/*")))))
 #+end_src
 
 ** Verilog
@@ -548,16 +548,22 @@ Use [[https://github.com/dalance/svls][svls]] as SystemVerilog Language Server.
 #+begin_src emacs-lisp :tangle packages.el
 (package! verilog-mode
   :recipe (:host github
-           :repo "ezchi/verilog-mode"
-           :branch "lite"))
+                 :repo "ezchi/verilog-mode"
+                 :branch "lite"))
 #+end_src
 
 **** yasnippets-verilog
 #+begin_src emacs-lisp :tangle packages.el
-(package! yasnippets-verilog
-  :recipe (:host github
-           :repo "ezchi/yasnippets-verilog"
-           :files ("*.el" ("snippets" ("verilog-mode" "snippets/verilog-mode/*")))))
+(if (string= (system-name) "Enzes-MacBook-Pro.local")
+    (package! yasnippets-verilog
+      :recipe (:host github
+               :repo "ezchi/yasnippets-verilog"
+               :files ("*.el" ("snippets" ("verilog-mode" "snippets/verilog-mode/*")))))
+  (package! yasnippets-verilog
+    :recipe (:host github
+             :repo "ezchi/yasnippets-verilog"
+             :branch "feature/optiver"
+             :files ("*.el" ("snippets" ("verilog-mode" "snippets/verilog-mode/*"))))))
 #+end_src
 
 * Tools
@@ -582,6 +588,19 @@ These are encrypted with gpg and are essentially set mostly by custom-*
   (epa-file-enable)
   (setq custom-file (concat doom-private-dir "local/private.el.gpg"))
   (load custom-file))
+#+end_src
+** Optiver
+*** optiver-fex
+#+begin_src emacs-lisp :tangle (if (string= (system-name) "Enzes-MacBook-Pro.local") "no" "packages.el")
+(unless (string= (system-name) "Enzes-MacBook-Pro.local")
+  (package! optiver-fex
+    :recipe (:type git
+                   :repo "ssh://git@git:7999/~enzchi/optiver-fex.git")))
+#+end_src
+
+#+begin_src emacs-lisp :tangle (if (string= (system-name) "Enzes-MacBook-Pro.local") "no" "yes")
+(use-package! optiver-fex
+  :commands (optiver-fex-rerun-previous-command optiver-fex-dispatch))
 #+end_src
 ** Search
 *** rg
@@ -637,16 +656,16 @@ Manage multiple =vterm= buffers.
 
 #+begin_src emacs-lisp
 (after! mu4e
-(set-email-account! "Gmail"
-  '((mu4e-sent-folder       . "/[Gmail].Sent Mail")
-    (mu4e-drafts-folder     . "/[Gmail].Drafts")
-    (mu4e-trash-folder      . "/[Gmail].Trash")
-    (mu4e-refile-folder     . "/[Gmail].All Mail")
-    (smtpmail-smtp-server   . "smtp.gmail.com")
-    (smtpmail-smtp-service  . 587)
-    (smtpmail-smtp-user     . "Enze.Chi@gmail.com")
-    (mu4e-compose-signature . "\nEnze Chi"))
-  t))
+  (set-email-account! "Gmail"
+                      '((mu4e-sent-folder       . "/[Gmail].Sent Mail")
+                        (mu4e-drafts-folder     . "/[Gmail].Drafts")
+                        (mu4e-trash-folder      . "/[Gmail].Trash")
+                        (mu4e-refile-folder     . "/[Gmail].All Mail")
+                        (smtpmail-smtp-server   . "smtp.gmail.com")
+                        (smtpmail-smtp-service  . 587)
+                        (smtpmail-smtp-user     . "Enze.Chi@gmail.com")
+                        (mu4e-compose-signature . "\nEnze Chi"))
+                      t))
 #+end_src
 
 Set bookmark for =Inbox= which excludes =Trash= folder
@@ -673,8 +692,8 @@ Fetch for new email for every 5 minutes.
 #+begin_src emacs-lisp :tangle packages.el
 (package! org-pandoc-import
   :recipe (:host github
-           :repo "tecosaur/org-pandoc-import"
-           :files ("*.el" "filters" "preprocessors")))
+                 :repo "tecosaur/org-pandoc-import"
+                 :files ("*.el" "filters" "preprocessors")))
 #+end_src
 
 ** rg
@@ -686,5 +705,5 @@ Fetch for new email for every 5 minutes.
 #+begin_src emacs-lisp :tangle packages.el
 (package! ecdate
   :recipe (:host github
-           :repo "ezchi/ecdate"))
+                 :repo "ezchi/ecdate"))
 #+end_src
