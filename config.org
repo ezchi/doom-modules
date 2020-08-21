@@ -244,7 +244,10 @@ Add =roam= capture template.
 
 ** Python
 #+begin_src emacs-lisp
-(setq python-shell-completion-native-enable nil)
+(use-package! python
+  :mode ("SConstruct\\'" . python-mode)
+  :config
+  (setq python-shell-completion-native-enable nil))
 #+end_src
 ** VHDL
 *** Initialization
