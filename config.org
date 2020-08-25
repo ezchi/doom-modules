@@ -70,10 +70,10 @@ Bind =z $= to =flyspell-=
   (map! :localleader
         :map c++-mode-map
         (:prefix ("g" . "+goto")
-                 :desc "goto definition"     "g" #'lsp-find-definition
-                 :desc "goto declaration"    "d" #'lsp-find-declaration
-                 :desc "goto reference"      "r" #'lsp-find-references
-                 :desc "goto implementation" "i" #'lsp-find-implementation)))
+         :desc "goto definition"     "g" #'lsp-find-definition
+         :desc "goto declaration"    "d" #'lsp-find-declaration
+         :desc "goto reference"      "r" #'lsp-find-references
+         :desc "goto implementation" "i" #'lsp-find-implementation)))
 #+end_src
 ** Go
 Format code before save.
@@ -239,7 +239,7 @@ Add =roam= capture template.
 #+begin_src emacs-lisp :tangle packages.el
 (package! ob-http
   :recipe (:host github
-                 :repo "zweifisch/ob-http"))
+           :repo "zweifisch/ob-http"))
 #+end_src
 
 ** Python
@@ -399,63 +399,63 @@ Add advice function to skip =lsp-hover= on empty line.
   (map! :localleader
         :map vhdl-mode-map
         (:prefix ("t" . "+template")
-                 "ar" #'vhdl-template-architecture
-                 "at" #'vhdl-template-assert
+         "ar" #'vhdl-template-architecture
+         "at" #'vhdl-template-assert
 
-                 "bl" #'vhdl-template-block
+         "bl" #'vhdl-template-block
 
-                 "ca" #'vhdl-template-case-is
-                 "co" #'vhdl-template-constant
+         "ca" #'vhdl-template-case-is
+         "co" #'vhdl-template-constant
 
-                 "ei" #'vhdl-template-elsif
-                 "el" #'vhdl-template-else
-                 "en" #'vhdl-template-entity
+         "ei" #'vhdl-template-elsif
+         "el" #'vhdl-template-else
+         "en" #'vhdl-template-entity
 
-                 "fb" #'vhdl-template-function-body
-                 "fd" #'vhdl-template-function-decl
-                 "fl" #'vhdl-template-for-loop
+         "fb" #'vhdl-template-function-body
+         "fd" #'vhdl-template-function-decl
+         "fl" #'vhdl-template-for-loop
 
-                 "ge" #'vhdl-template-generic
+         "ge" #'vhdl-template-generic
 
-                 "fg" #'vhdl-template-for-generate
-                 "ig" #'vhdl-template-if-generate
+         "fg" #'vhdl-template-for-generate
+         "ig" #'vhdl-template-if-generate
 
-                 "it" #'vhdl-template-if-then
+         "it" #'vhdl-template-if-then
 
-                 "li" #'vhdl-template-library
+         "li" #'vhdl-template-library
 
-                 "pc" #'vhdl-template-process-comb
-                 "po" #'vhdl-template-port
-                 "ps" #'vhdl-template-process-seq
+         "pc" #'vhdl-template-process-comb
+         "po" #'vhdl-template-port
+         "ps" #'vhdl-template-process-seq
 
-                 "si" #'vhdl-template-signal
-                 "su" #'vhdl-template-subtype
+         "si" #'vhdl-template-signal
+         "su" #'vhdl-template-subtype
 
-                 "ty" #'vhdl-template-type
+         "ty" #'vhdl-template-type
 
-                 "us" #'vhdl-template-use
+         "us" #'vhdl-template-use
 
-                 "va" #'vhdl-template-variable
+         "va" #'vhdl-template-variable
 
-                 "Pn" #'vhdl-template-package-numeric-std
-                 "Ps" #'vhdl-template-package-std-logic-1164
-                 )))
+         "Pn" #'vhdl-template-package-numeric-std
+         "Ps" #'vhdl-template-package-std-logic-1164
+         )))
 #+end_src
 *** Packages
 **** vhdl-mode
 #+begin_src emacs-lisp :tangle packages.el
 (package! vhdl-mode
   :recipe (:host github
-                 :repo "ezchi/vhdl-mode"
-                 :branch "ec-release"))
+           :repo "ezchi/vhdl-mode"
+           :branch "ec-release"))
 #+end_src
 
 **** yasnippets-vhdl
 #+begin_src emacs-lisp :tangle packages.el
 (package! yasnippets-vhdl
   :recipe (:host github
-                 :repo "ezchi/yasnippets-vhdl"
-                 :files ("*.el" ("snippets" ("vhdl-mode" "snippets/vhdl-mode/*")))))
+           :repo "ezchi/yasnippets-vhdl"
+           :files ("*.el" ("snippets" ("vhdl-mode" "snippets/vhdl-mode/*")))))
 #+end_src
 
 ** Verilog
@@ -538,8 +538,10 @@ Use [[https://github.com/dalance/svls][svls]] as SystemVerilog Language Server.
 #+begin_src emacs-lisp :tangle packages.el
 (package! verilog-mode
   :recipe (:host github
-                 :repo "ezchi/verilog-mode"
-                 :branch "lite"))
+           :repo "ezchi/verilog-mode"
+           :branch "lite"
+           :files ("verilog-mode.el")
+           :nonrecursive t))
 #+end_src
 
 **** yasnippets-verilog
@@ -585,7 +587,7 @@ These are encrypted with gpg and are essentially set mostly by custom-*
 (unless (string= (system-name) "Enzes-MacBook-Pro.local")
   (package! optiver-fex
     :recipe (:type git
-                   :repo "ssh://git@git:7999/~enzchi/optiver-fex.git")))
+             :repo "ssh://git@git:7999/~enzchi/optiver-fex.git")))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -603,6 +605,29 @@ Needs a solution to use =ripgrep= to search =gitignore= files in a project.
       :n "SPC s / r" #'rg)
 #+end_src
 
+** Personal collections
+*** ec-elisp-dumpground
+Some Elisp code I am playing with and have no home for them yet.
+#+begin_src emacs-lisp :tangle packages.el
+(package! ec-elisp-dumpground
+  :recipe (:host github
+           :repo "ezchi/ec-elisp-dumpground"))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! ec-elisp-dumpground)
+#+end_src
+
+*** ecdate
+#+begin_src emacs-lisp :tangle packages.el
+(package! ecdate
+  :recipe (:host github
+           :repo "ezchi/ecdate"))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! ecdate)
+#+end_src
 * Email
 
 #+begin_src emacs-lisp
@@ -643,8 +668,8 @@ Fetch for new email for every 5 minutes.
 #+begin_src emacs-lisp :tangle packages.el
 (package! org-pandoc-import
   :recipe (:host github
-                 :repo "tecosaur/org-pandoc-import"
-                 :files ("*.el" "filters" "preprocessors")))
+           :repo "tecosaur/org-pandoc-import"
+           :files ("*.el" "filters" "preprocessors")))
 #+end_src
 
 ** rg
@@ -652,9 +677,3 @@ Fetch for new email for every 5 minutes.
 (package! rg)
 #+end_src
 
-** ecdate
-#+begin_src emacs-lisp :tangle packages.el
-(package! ecdate
-  :recipe (:host github
-                 :repo "ezchi/ecdate"))
-#+end_src
