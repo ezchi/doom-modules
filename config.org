@@ -344,7 +344,7 @@ here until upstream fix it.
 #+end_src
 
 *** yasnippets-vhdl
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package! yasnippets-vhdl
   :defer t)
 #+end_src
