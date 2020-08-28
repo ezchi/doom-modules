@@ -15,9 +15,7 @@
 * User Information
 #+begin_src emacs-lisp
 (setq user-full-name "Enze Chi")
-(if (string= (system-name) "Enzes-MacBook-Pro.local")
-    (setq user-mail-address "Enze.Chi@gmail.com")
-  (setq user-mail-address "Enze.Chi@optiver.com.au"))
+(setq user-mail-address (getenv "MY_EMAIL"))
 #+end_src
 
 * Appearance
@@ -584,14 +582,14 @@ These are encrypted with gpg and are essentially set mostly by custom-*
 ** Optiver
 *** optiver-fex
 #+begin_src emacs-lisp :tangle "packages.el"
-(unless (string= (system-name) "Enzes-MacBook-Pro.local")
+(when (string= (getenv "MY_LOCATION") "@office")
   (package! optiver-fex
     :recipe (:type git
              :repo "ssh://git@git:7999/~enzchi/optiver-fex.git")))
 #+end_src
 
 #+begin_src emacs-lisp
-(unless (string= (system-name) "Enzes-MacBook-Pro.local")
+(when (string= (getenv "MY_LOCATION") "@office")
   (use-package! optiver-fex
     :commands (optiver-fex-rerun-previous-command optiver-fex-dispatch)))
 #+end_src
