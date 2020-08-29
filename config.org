@@ -216,6 +216,13 @@ Add =roam= capture template.
   (setq org-enforce-todo-checkbox-dependencies t))
 #+end_src
 
+*** Snippets
+#+begin_src emacs-lisp :tangle packages.el
+(package! yasnippets-org
+  :recipe (:host github
+           :repo "ezchi/yasnippets-org"
+           :files ("*.el" ("snippets" ("org-mode" "snippets/org-mode/*")))))
+#+end_src
 ** Python
 Apply *python-mode* on =SConstruct=.
 #+begin_src emacs-lisp
