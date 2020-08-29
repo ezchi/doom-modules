@@ -593,6 +593,25 @@ Needs a solution to use =ripgrep= to search =gitignore= files in a project.
       :n "SPC s / r" #'rg)
 #+end_src
 
+*** consel-fd
+Search files with =fd=. So far this is best solution for me to search ignored files in a project.
+
+#+begin_src emacs-lisp
+(use-package! counsel-fd
+  :commands (counsel-fd-dired-jump counsel-fd-file-jump)
+  :init
+  (setq counsel-fd-command "fd --hidden --color never -I ")
+  :config
+  (map! :n "SPC z f p" (cmd!! #'counsel-fd-file-jump '(4))))
+#+end_src
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! counsel-fd
+  :recipe (:host github
+           :repo "ezchi/counsel-fd"
+           :branch "develop"))
+#+end_src
+
 ** Personal collections
 *** ec-elisp-dumpground
 Some Elisp code I am playing with and have no home for them yet.
