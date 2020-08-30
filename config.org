@@ -223,6 +223,29 @@ Add =roam= capture template.
            :repo "ezchi/yasnippets-org"
            :files ("*.el" ("snippets" ("org-mode" "snippets/org-mode/*")))))
 #+end_src
+
+*** Google calendar
+#+begin_src emacs-lisp
+(use-package! org-gcal
+  :commands (org-gcal-sync)
+  :init
+  (defvar ec/org-gcal-config-json (expand-file-name "gcal.json.gpg" doom-private-dir))
+  :hook (org-agenda-mode . org-gcal-sync)
+  :config
+  (defun ec/get-gcal-config-value (key)
+    "Return the value of org-gcal JSON config KEY."
+    (let* ((json (cdr (assoc 'installed (json-read-file ec/org-gcal-config-json)))))
+      (cdr (assoc key json))))
+
+  (setq org-gcal-client-id (ec/get-gcal-config-value 'client_id)
+        org-gcal-client-secret (ec/get-gcal-config-value 'client_secret)
+        org-gcal-fetch-file-alist '(("Enze.Chi@gmail.com" .  "~/org/gcal.org"))))
+#+end_src
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-gcal)
+#+end_src
+
 ** Python
 Apply *python-mode* on =SConstruct=.
 #+begin_src emacs-lisp
