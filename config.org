@@ -21,9 +21,10 @@
 * Appearance
 ** Fonts
 #+begin_src emacs-lisp
-(if (> (x-display-pixel-width) 2000)
-    (setq doom-font (font-spec :family "Go Mono for Powerline" :size 22))
-  (setq doom-font (font-spec :family "Go Mono for Powerline" :size 12)))
+(when window-system
+  (if (> (x-display-pixel-width) 2000)
+      (setq doom-font (font-spec :family "Go Mono for Powerline" :size 22))
+    (setq doom-font (font-spec :family "Go Mono for Powerline" :size 12))))
 #+end_src
 
 ** Display time with date
@@ -81,7 +82,7 @@ Format code before save.
 **** Capture templates
 Add review capture template.
 #+begin_src emacs-lisp
-(after! org
+(after! org-capture
   (setq ec/org-capture-review-file (expand-file-name "reviews.org" org-directory))
   (mapc (lambda (template)
           (add-to-list 'org-capture-templates template))
