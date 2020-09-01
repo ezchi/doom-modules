@@ -88,7 +88,8 @@ Add review capture template.
         '(("r" "Review")
           ("rw" "Weekly" entry (file+olp+datetree ec/org-capture-review-file "Weekly") "* %U\n%?" :tree-type week)
           ("rm" "Monthly" entry (file+olp+datetree ec/org-capture-review-file "Monthly") "* %U\n%?")
-          ("ry" "Yearly" entry (file+olp+datetree ec/org-capture-review-file "Yearly") "* %U\n%?"))))
+          ("ry" "Yearly" entry (file+olp+datetree ec/org-capture-review-file "Yearly") "* %U\n%?")
+          ("g" "Grab" entry (file+headline +org-capture-notes-file "Grab") "* %? \n%i\n" :prepend t :create t))))
 #+end_src
 
 **** Helper functions
