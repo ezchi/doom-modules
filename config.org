@@ -588,12 +588,13 @@ Use [[https://github.com/dalance/svls][svls]] as SystemVerilog Language Server.
 #+end_src
 ** GPG :noexport:
 These are encrypted with gpg and are essentially set mostly by custom-*
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
 (use-package! epa-file
   :config
+  (setenv "GPG_AGENT_INFO" nil)
   (epa-file-enable)
-  (setq custom-file (concat doom-private-dir "local/private.el.gpg"))
-  (load custom-file))
+  (setq custom-file (concat doom-private-dir "private.el.gpg"))
+  (load custom-file 'noerror))
 #+end_src
 ** Optiver
 *** optiver-fex
