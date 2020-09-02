@@ -596,6 +596,17 @@ These are encrypted with gpg and are essentially set mostly by custom-*
   (setq custom-file (concat doom-private-dir "private.el.gpg"))
   (load custom-file 'noerror))
 #+end_src
+
+Set =.authinfo=.
+#+begin_src emacs-lisp
+(setq auth-sources `(,(expand-file-name ".authinfo.gpg" doom-private-dir)))
+#+end_src
+
+Enable this if need to debug the authentication issues.
+#+begin_src emacs-lisp :tangle no
+(setq auth-source-debug t)
+#+end_src
+
 ** Optiver
 *** optiver-fex
 #+begin_src emacs-lisp :tangle "packages.el"
