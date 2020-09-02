@@ -589,17 +589,19 @@ Use [[https://github.com/dalance/svls][svls]] as SystemVerilog Language Server.
 ** GPG :noexport:
 These are encrypted with gpg and are essentially set mostly by custom-*
 #+begin_src emacs-lisp
-(use-package! epa-file
-  :config
-  (setenv "GPG_AGENT_INFO" nil)
-  (epa-file-enable)
-  (setq custom-file (concat doom-private-dir "private.el.gpg"))
-  (load custom-file 'noerror))
+(if (string= (getenv "MY_LOCATION") "@home")
+    (use-package! epa-file
+      :config
+      (setenv "GPG_AGENT_INFO" nil)
+      (epa-file-enable)
+      (setq custom-file (concat doom-private-dir "private.el.gpg"))
+      (load custom-file 'noerror)))
 #+end_src
 
 Set =.authinfo=.
 #+begin_src emacs-lisp
-(setq auth-sources `(,(expand-file-name ".authinfo.gpg" doom-private-dir)))
+(if (string= (getenv "MY_LOCATION") "@home")
+    (setq auth-sources `(,(expand-file-name ".authinfo.gpg" doom-private-dir))))
 #+end_src
 
 Enable this if need to debug the authentication issues.
