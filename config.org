@@ -583,7 +583,7 @@ Use [[https://github.com/dalance/svls][svls]] as SystemVerilog Language Server.
 #+end_src
 
 *** Packages
-#+begin_src emacs-lisp :tangle packages.el
+#+begin_src emacs-lisp :tangle no
 (package! git-auto-commit-mode)
 #+end_src
 ** GPG :noexport:
