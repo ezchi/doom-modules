@@ -550,7 +550,7 @@ Use [[https://github.com/dalance/svls][svls]] as SystemVerilog Language Server.
            :files ("*.el" ("snippets" ("verilog-mode" "snippets/verilog-mode/*")))))
 #+end_src
 
-#+begin_src emacs-lisp :tangle (if (ec/at-office-p) "package.el" "no")
+#+begin_src emacs-lisp :tangle (if (ec/at-office-p) "packages.el" "no")
 (package! yasnippets-opt-verilog
   :recipe (:type git
            :repo "ssh://git@git:7999/~enzchi/yasnippets-opt-verilog.git"
