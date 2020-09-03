@@ -186,3 +186,15 @@
        :config
        literate
        (default +bindings +smartparens))
+
+(defun ec/my-location-at-p (location)
+  "Return non-nil if environement variable `MY_LOCATION' is set to `LOCATION'."
+  (string= (getenv "MY_LOCATION") location))
+
+(defun ec/at-home-p ()
+  "Return non-nil if MY_LOCATION is `@home'."
+  (ec/my-location-at-p "@home"))
+
+(defun ec/at-office-p ()
+  "Return non-nil if `MY_LOCATION' is `@office'."
+  (ec/my-location-at-p "@office"))

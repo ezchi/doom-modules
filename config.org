@@ -11,6 +11,7 @@
 #+exclude_tags: noexport
 #+creator: Emacs 26.3 (Org mode 9.4)
 #+startup: overview
+#+property: header-args:emacs-lisp+ :tangle "yes"
 
 * User Information
 #+begin_src emacs-lisp
@@ -227,22 +228,21 @@ Add =roam= capture template.
 #+end_src
 
 *** Google calendar
-#+begin_src emacs-lisp
-(when (string= (getenv "MY_LOCATION") "@home")
-  (use-package! org-gcal
-    :commands (org-gcal-sync)
-    :init
-    (defvar ec/org-gcal-config-json (expand-file-name "gcal.json.gpg" doom-private-dir))
-    :hook (org-agenda-mode . org-gcal-sync)
-    :config
-    (defun ec/get-gcal-config-value (key)
-      "Return the value of org-gcal JSON config KEY."
-      (let* ((json (cdr (assoc 'installed (json-read-file ec/org-gcal-config-json)))))
-        (cdr (assoc key json))))
+#+begin_src emacs-lisp :tangle (if (ec/at-home-p) "yes" "no")
+(use-package! org-gcal
+  :commands (org-gcal-sync)
+  :init
+  (defvar ec/org-gcal-config-json (expand-file-name "gcal.json.gpg" doom-private-dir))
+  :hook (org-agenda-mode . org-gcal-sync)
+  :config
+  (defun ec/get-gcal-config-value (key)
+    "Return the value of org-gcal JSON config KEY."
+    (let* ((json (cdr (assoc 'installed (json-read-file ec/org-gcal-config-json)))))
+      (cdr (assoc key json))))
 
-    (setq org-gcal-client-id (ec/get-gcal-config-value 'client_id)
-          org-gcal-client-secret (ec/get-gcal-config-value 'client_secret)
-          org-gcal-fetch-file-alist '(("Enze.Chi@gmail.com" .  "~/org/gcal.org")))))
+  (setq org-gcal-client-id (ec/get-gcal-config-value 'client_id)
+        org-gcal-client-secret (ec/get-gcal-config-value 'client_secret)
+        org-gcal-fetch-file-alist '(("Enze.Chi@gmail.com" .  "~/org/gcal.org"))))
 #+end_src
 
 #+begin_src emacs-lisp :tangle packages.el
@@ -541,10 +541,11 @@ Use [[https://github.com/dalance/svls][svls]] as SystemVerilog Language Server.
 #+begin_src emacs-lisp
 (use-package! yasnippets-verilog
   :defer t)
+#+end_src
 
-(when (string= (getenv "MY_LOCATION") "@office")
-  (use-package! yasnippets-opt-verilog
-    :defer t))
+#+begin_src emacs-lisp :tangle (if (ec/at-office-p) "yes" "no")
+(use-package! yasnippets-opt-verilog
+  :defer t)
 #+end_src
 
 *** Packages
@@ -564,12 +565,13 @@ Use [[https://github.com/dalance/svls][svls]] as SystemVerilog Language Server.
   :recipe (:host github
            :repo "ezchi/yasnippets-verilog"
            :files ("*.el" ("snippets" ("verilog-mode" "snippets/verilog-mode/*")))))
+#+end_src
 
-(when (string= (getenv "MY_LOCATION") "@office")
-  (package! yasnippets-opt-verilog
-    :recipe (:type git
-             :repo "ssh://git@git:7999/~enzchi/yasnippets-opt-verilog.git"
-             :files ("*.el" ("snippets" ("verilog-mode" "snippets/verilog-mode/*"))))))
+#+begin_src emacs-lisp :tangle (if (ec/at-office-p) "package.el" "no")
+(package! yasnippets-opt-verilog
+  :recipe (:type git
+           :repo "ssh://git@git:7999/~enzchi/yasnippets-opt-verilog.git"
+           :files ("*.el" ("snippets" ("verilog-mode" "snippets/verilog-mode/*")))))
 #+end_src
 
 * Tools
@@ -588,20 +590,14 @@ Use [[https://github.com/dalance/svls][svls]] as SystemVerilog Language Server.
 #+end_src
 ** GPG :noexport:
 These are encrypted with gpg and are essentially set mostly by custom-*
-#+begin_src emacs-lisp
-(if (string= (getenv "MY_LOCATION") "@home")
-    (use-package! epa-file
-      :config
-      (setenv "GPG_AGENT_INFO" nil)
-      (epa-file-enable)
-      (setq custom-file (concat doom-private-dir "private.el.gpg"))
-      (load custom-file 'noerror)))
-#+end_src
-
-Set =.authinfo=.
-#+begin_src emacs-lisp
-(if (string= (getenv "MY_LOCATION") "@home")
-    (setq auth-sources `(,(expand-file-name ".authinfo.gpg" doom-private-dir))))
+#+begin_src emacs-lisp :tangle (if (ec/at-home-p) "yes" "no")
+(use-package! epa-file
+  :config
+  (setenv "GPG_AGENT_INFO" nil)
+  (epa-file-enable)
+  (setq custom-file (concat doom-private-dir "private.el.gpg"))
+  (load custom-file 'noerror)
+  (setq auth-sources `(,(expand-file-name ".authinfo.gpg" doom-private-dir))))
 #+end_src
 
 Enable this if need to debug the authentication issues.
@@ -611,17 +607,15 @@ Enable this if need to debug the authentication issues.
 
 ** Optiver
 *** optiver-fex
-#+begin_src emacs-lisp :tangle "packages.el"
-(when (string= (getenv "MY_LOCATION") "@office")
-  (package! optiver-fex
-    :recipe (:type git
-             :repo "ssh://git@git:7999/~enzchi/optiver-fex.git")))
+#+begin_src emacs-lisp :tangle (if (ec/at-office-p) "packages.el" "no")
+(package! optiver-fex
+  :recipe (:type git
+           :repo "ssh://git@git:7999/~enzchi/optiver-fex.git"))
 #+end_src
 
-#+begin_src emacs-lisp
-(when (string= (getenv "MY_LOCATION") "@office")
-  (use-package! optiver-fex
-    :commands (optiver-fex-rerun-previous-command optiver-fex-dispatch)))
+#+begin_src emacs-lisp :tangle (if (ec/at-office-p) "yes" "no")
+(use-package! optiver-fex
+  :commands (optiver-fex-rerun-previous-command optiver-fex-dispatch))
 #+end_src
 ** Search
 *** rg
