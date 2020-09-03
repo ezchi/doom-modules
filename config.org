@@ -53,24 +53,7 @@ Show =which-key= window faster.
 (setq which-key-idle-delay 0.5)
 #+end_src
 
-Bind =z $= to =flyspell-=
-#+begin_src emacs-lisp :tangle no
-(map! :n "z $" #'flyspell-correct-word-before-point)
-#+end_src
-
 * Languages
-** C++
-*** Key bindings
-#+begin_src emacs-lisp :tangle no
-(after! cc-mode
-  (map! :localleader
-        :map c++-mode-map
-        (:prefix ("g" . "+goto")
-         :desc "goto definition"     "g" #'lsp-find-definition
-         :desc "goto declaration"    "d" #'lsp-find-declaration
-         :desc "goto reference"      "r" #'lsp-find-references
-         :desc "goto implementation" "i" #'lsp-find-implementation)))
-#+end_src
 ** Go
 Format code before save.
 #+begin_src emacs-lisp
