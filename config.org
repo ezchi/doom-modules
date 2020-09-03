@@ -677,7 +677,7 @@ Some Elisp code I am playing with and have no home for them yet.
 (use-package! ecdate)
 #+end_src
 * Email
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle (if (ec/at-home-p) "yes" "no")
 (after! mu4e
   (set-email-account! "Gmail"
                       '((mu4e-sent-folder       . "/[Gmail].Sent Mail")
@@ -693,7 +693,7 @@ Some Elisp code I am playing with and have no home for them yet.
 
 Set bookmark for =Inbox= which excludes =Trash= folder
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle (if (ec/at-home-p) "yes" "no")
 (after! mu4e
   (add-to-list 'mu4e-bookmarks
                (make-mu4e-bookmark
@@ -703,7 +703,7 @@ Set bookmark for =Inbox= which excludes =Trash= folder
 #+end_src
 
 Fetch for new email for every 5 minutes.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle (if (ec/at-home-p) "yes" "no")
 (after! mu4e
   (setq mu4e-update-interval 300))
 #+end_src
