@@ -225,7 +225,7 @@ Add =roam= capture template.
 
   (setq org-gcal-client-id (ec/get-gcal-config-value 'client_id)
         org-gcal-client-secret (ec/get-gcal-config-value 'client_secret)
-        org-gcal-fetch-file-alist '(("Enze.Chi@gmail.com" .  "~/org/gcal.org"))))
+        org-gcal-fetch-file-alist `(("Enze.Chi@gmail.com" . ,(expand-file-name "gcal.org.gpg" doom-private-dir)))))
 #+end_src
 
 #+begin_src emacs-lisp :tangle packages.el
