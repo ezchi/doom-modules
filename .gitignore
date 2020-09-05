@@ -1,3 +1,5 @@
 *
 !init.el
 !config.org
+!.authinfo.gpg
+!gcal.json.gpg
