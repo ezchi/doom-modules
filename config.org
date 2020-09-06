@@ -21,11 +21,15 @@
 
 * Appearance
 ** Fonts
+
 #+begin_src emacs-lisp
+(setq doom-font (font-spec :family "Go Mono for Powerline" :size 9))
+
 (when window-system
   (if (> (x-display-pixel-width) 2000)
       (setq doom-font (font-spec :family "Go Mono for Powerline" :size 22))
-    (setq doom-font (font-spec :family "Go Mono for Powerline" :size 12))))
+    (setq doom-font (font-spec :family "Go Mono for Powerline" :size 10))))
+
 #+end_src
 
 ** Display time with date
@@ -578,8 +582,6 @@ These are encrypted with gpg and are essentially set mostly by custom-*
   :config
   (setenv "GPG_AGENT_INFO" nil)
   (epa-file-enable)
-  (setq custom-file (concat doom-private-dir "private.el.gpg"))
-  (load custom-file 'noerror)
   (setq auth-sources `(,(expand-file-name ".authinfo.gpg" doom-private-dir))))
 #+end_src
 
