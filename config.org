@@ -66,6 +66,26 @@ Format code before save.
 #+end_src
 
 ** Org
+*** Pre-load
+Set the base variables before load org-mode.
+#+begin_src emacs-lisp
+(setq org-directory (expand-file-name "org" (getenv "HOME")))
+(setq org-agenda-files (list org-directory))
+
+(setq org-roam-directory (expand-file-name "roam" org-directory))
+(add-to-list 'org-agenda-files org-roam-directory)
+
+;; (use-package! org-journal
+;;   :bind
+;;   ("SPC n j" . org-journal-new-entry)
+;;   :custom
+;;   (org-journal-dir org-roam-directory)
+;;   (org-journal-date-prefix "#+TITLE: ")
+;;   (org-journal-file-format "%Y-%m-%d.org")
+;;   (org-journal-date-format "%A, %d %B %Y"))
+;; (setq org-journal-enable-agenda-integration t)
+#+end_src
+
 *** Review
 **** Capture templates
 Add review capture template.
@@ -169,21 +189,6 @@ Enable syntax highlight for exported source blocks with =minted=.
 #+end_src
 
 *** Roam
-#+begin_src emacs-lisp
-(after! org
-  (when (featurep! +roam)
-    (setq org-roam-directory (expand-file-name "roam" org-directory))
-    ;; (use-package! org-journal
-    ;;   :bind
-    ;;   ("SPC n j" . org-journal-new-entry)
-    ;;   :custom
-    ;;   (org-journal-dir org-roam-directory)
-    ;;   (org-journal-date-prefix "#+TITLE: ")
-    ;;   (org-journal-file-format "%Y-%m-%d.org")
-    ;; (org-journal-date-format "%A, %d %B %Y"))
-    (setq org-journal-enable-agenda-integration t)))
-#+end_src
-
 Add =roam= capture template.
 #+begin_src emacs-lisp
 (after! org-roam
