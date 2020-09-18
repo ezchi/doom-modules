@@ -19,6 +19,40 @@
 (setq user-mail-address (getenv "MY_EMAIL"))
 #+end_src
 
+* Better defaults
+
+** Simple settings
+#+begin_src emacs-lisp
+(setq-default
+ delete-by-moving-to-trash t                      ; Delete files to trash
+ tab-width 4                                      ; Set width for tabs
+ uniquify-buffer-name-style 'forward              ; Uniquify buffer names
+ window-combination-resize t                      ; take new window space from all other windows (not just current)
+ x-stretch-cursor t)                              ; Stretch cursor to the glyph width
+
+(setq undo-limit 80000000                         ; Raise undo-limit to 80Mb
+      evil-want-fine-undo t                       ; By default while in insert all changes are one big blob. Be more granular
+      auto-save-default t                         ; Nobody likes to loose work, I certainly don't
+      inhibit-compacting-font-caches t            ; When there are lots of glyphs, keep them in memory
+      truncate-string-ellipsis "…")               ; Unicode ellispis are nicer than "...", and also save /precious/ space
+
+(delete-selection-mode 1)                         ; Replace selection when inserting text
+(global-subword-mode 1)                           ; Iterate through CamelCase words
+#+end_src
+
+** Windows
+#+begin_src emacs-lisp
+(setq evil-vsplit-window-right t
+      evil-split-window-below t)
+#+end_src
+
+Use *ivy* to choose buffer after window split.
+#+begin_src emacs-lisp
+(defadvice! prompt-for-buffer (&rest _)
+  :after '(evil-window-split evil-window-vsplit)
+  (+ivy/switch-buffer))
+#+end_src
+
 * Appearance
 ** Fonts
 
@@ -85,6 +119,32 @@ Set the base variables before load org-mode.
 ;;   (org-journal-date-format "%A, %d %B %Y"))
 ;; (setq org-journal-enable-agenda-integration t)
 #+end_src
+
+*** Clock
+**** Automatic clock-out
+Automatic clock-out when Emacs is idle for 5 mins
+#+begin_src emacs-lisp
+(after! org
+  (setq org-clock-auto-clockout-timer 300)
+  (org-clock-auto-clockout-insinuate))
+#+end_src
+*** Appearance
+**** Numeric Header
+Enable numeric heading by default.
+
+#+begin_src emacs-lisp
+(add-hook! org-mode
+  (org-num-mode 1))
+#+end_src
+**** Trun on org-table-header-mode by default
+#+begin_src emacs-lisp
+(setq org-table-header-line-p t)
+#+end_src
+**** Pretty tags
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-pretty-tags)
+#+end_src
+
 
 *** Review
 **** Capture templates
@@ -180,6 +240,20 @@ Add agenda command for weekly review.
            ((org-agenda-compact-blocks t))))))
 #+end_src
 
+**** Try out super agenda
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-super-agenda)
+#+end_src
+
+*** Capture
+
+**** Declarative Org Capture Templates (doct)
+#+begin_src emacs-lisp :tangle packages.el
+(package! doct
+  :recipe (:host github :repo "progfolio/doct"))
+#+end_src
+
+
 *** Export
 Enable syntax highlight for exported source blocks with =minted=.
 #+begin_src emacs-lisp
@@ -203,6 +277,29 @@ Add =roam= capture template.
     ,#+ROAM_KEY: ${ref}
     - source :: ${ref}"
            :unnarrowed t))))
+#+end_src
+
+**** org-roam-server
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-roam-server)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! org-roam-server
+  :after org-roam
+  :config
+  (setq org-roam-server-host "127.0.0.1"
+        org-roam-server-port 8078
+        org-roam-server-export-inline-images t
+        org-roam-server-authenticate nil
+        org-roam-server-label-truncate t
+        org-roam-server-label-truncate-length 60
+        org-roam-server-label-wrap-length 20)
+  (defun org-roam-server-open()
+    "Ensure the server is active, then open the roam graph."
+    (interactive)
+    (org-roam-server-mode 1)
+    (browse-url-default-browser (format "http://localhost:%d" org-roam-server-port))))
 #+end_src
 
 *** TODOs
