@@ -80,6 +80,12 @@ Display date and time in 24h format.
 #+end_src
 
 * Key bindings
+I do not use *evil-escape* and disable it by default.
+#+begin_src emacs-lisp
+(after! evil
+  (evil-escape-mode nil))
+#+end_src
+
 Change local leader key to =,=.
 
 #+begin_src emacs-lisp
@@ -144,7 +150,6 @@ Enable numeric heading by default.
 #+begin_src emacs-lisp :tangle packages.el
 (package! org-pretty-tags)
 #+end_src
-
 
 *** Review
 **** Capture templates
@@ -253,6 +258,10 @@ Add agenda command for weekly review.
   :recipe (:host github :repo "progfolio/doct"))
 #+end_src
 
+#+begin_src emacs-lisp
+(use-package! doct
+  :commands (doct))
+#+end_src
 
 *** Export
 Enable syntax highlight for exported source blocks with =minted=.
@@ -306,6 +315,20 @@ Add =roam= capture template.
 #+begin_src emacs-lisp
 (after! org
   (setq org-enforce-todo-checkbox-dependencies t))
+#+end_src
+
+**** Extensible Dependencies 'N' Actions (EDNA)
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-edna)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! org-edna
+  :defer t
+  :commands (org-edna-mode)
+  :init
+  (after! org
+    (org-edna-mode 1)))
 #+end_src
 
 *** Snippets
