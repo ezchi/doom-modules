@@ -763,6 +763,21 @@ Search files with =fd=. So far this is best solution for me to search ignored fi
            :branch "develop"))
 #+end_src
 
+** Text
+*** Lorem Ipsum
+Sometimes I need to generate random text to try things, such as Evil key bindings.
+#+begin_src emacs-lisp :tangle packages.el
+(package! lorem-ipsum)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! lorem-ipsum
+  :commands (lorem-ipsum-insert-paragraphs
+             lorem-ipsum-insert-sentences
+             lorem-ipsum-insert-list)
+  :defer t)
+#+end_src
+
 ** Personal collections
 *** ec-elisp-dumpground
 Some Elisp code I am playing with and have no home for them yet.
