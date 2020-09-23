@@ -135,14 +135,7 @@ Automatic clock-out when Emacs is idle for 5 mins
   (org-clock-auto-clockout-insinuate))
 #+end_src
 *** Appearance
-**** Numeric Header
-Enable numeric heading by default.
-
-#+begin_src emacs-lisp
-(add-hook! org-mode
-  (org-num-mode 1))
-#+end_src
-**** Trun on org-table-header-mode by default
+**** Turn on org-table-header-mode by default
 #+begin_src emacs-lisp
 (setq org-table-header-line-p t)
 #+end_src
