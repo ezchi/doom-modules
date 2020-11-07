@@ -851,3 +851,14 @@ Try out asynchronous functions.
 #+begin_src emacs-lisp :tangle packages.el
 (package! aio)
 #+end_src
+
+** async-wait
+Try out [[https://github.com/chuntaro/emacs-async-await][Emacs async-await]].
+
+#+begin_src emacs-lisp
+(use-package! async-await)
+#+end_src
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! async-await)
+#+end_src
