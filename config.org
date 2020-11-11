@@ -114,16 +114,6 @@ Set the base variables before load org-mode.
 
 (setq org-roam-directory (expand-file-name "roam" org-directory))
 (add-to-list 'org-agenda-files org-roam-directory)
-
-;; (use-package! org-journal
-;;   :bind
-;;   ("SPC n j" . org-journal-new-entry)
-;;   :custom
-;;   (org-journal-dir org-roam-directory)
-;;   (org-journal-date-prefix "#+TITLE: ")
-;;   (org-journal-file-format "%Y-%m-%d.org")
-;;   (org-journal-date-format "%A, %d %B %Y"))
-;; (setq org-journal-enable-agenda-integration t)
 #+end_src
 
 *** Clock
@@ -268,9 +258,11 @@ Enable syntax highlight for exported source blocks with =minted=.
 Add =roam= capture template.
 #+begin_src emacs-lisp
 (after! org-roam
-  (map! :localleader
-        :map org-mode-map
-        :desc "jump to index" "mj" #'org-roam-jump-to-index)
+  (map! (:localleader
+         :map org-mode-map
+         :desc "jump to index" "mj" #'org-roam-jump-to-index)
+        :map doom-leader-notes-map
+        :desc "jump to index" "rj" #'org-roam-jump-to-index)
   (setq org-roam-ref-capture-templates
         '(("r" "ref" plain (function org-roam-capture--get-point)
            "%?"
@@ -298,10 +290,15 @@ Add =roam= capture template.
         org-roam-server-label-truncate-length 60
         org-roam-server-label-wrap-length 20)
   (defun org-roam-server-open()
-    "Ensure the server is active, then open the roam graph."
+    "Open org-roam server in browser."
     (interactive)
-    (org-roam-server-mode 1)
-    (browse-url-default-browser (format "http://localhost:%d" org-roam-server-port))))
+    (browse-url-default-browser (format "http://localhost:%d" org-roam-server-port)))
+  (map! (:localleader
+         :map org-mode-map
+         :desc "Open server" "mso" #'org-roam-server-open)
+        :map doom-leader-notes-map
+        :desc "Open server" "rso" #'org-roam-server-open)
+  (org-roam-server-mode 1))
 #+end_src
 
 *** TODOs
