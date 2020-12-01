@@ -58,12 +58,15 @@ Use *ivy* to choose buffer after window split.
 
 #+begin_src emacs-lisp
 (setq doom-font (font-spec :family "Go Mono for Powerline" :size 9))
+(setq ec-font-zoom-factor 1.8)
 
 (when window-system
+  ;; (setq resolution-factor (/ (x-display-pixel-height) 1080.0))
   (if (> (x-display-pixel-width) 2000)
       (setq doom-font (font-spec :family "Go Mono for Powerline" :size 22))
     (setq doom-font (font-spec :family "Go Mono for Powerline" :size 10))))
 
+(setq doom-big-font (font-spec :family "Go Mono for Powerline" :size (round (* ec-font-zoom-factor (font-get doom-font :size)))))
 #+end_src
 
 ** Display time with date
@@ -351,6 +354,17 @@ Add =roam= capture template.
 (package! org-gcal)
 #+end_src
 
+*** org-ql
+Query lanugage for Org files.
+
+#+begin_src emacs-lisp
+(use-package! org-ql
+  :commands (org-ql-view org-ql-search))
+#+end_src
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-ql)
+#+end_src
 ** Python
 Apply *python-mode* on =SConstruct=.
 #+begin_src emacs-lisp
@@ -677,6 +691,18 @@ Use [[https://github.com/dalance/svls][svls]] as SystemVerilog Language Server.
 #+end_src
 
 * Tools
+** Ediff
+#+begin_src emacs-lisp
+(after! ediff
+  (defun ec-ediff-copy-both-to-C ()
+    (interactive)
+    (ediff-copy-diff ediff-current-difference nil 'C nil
+                     (concat
+                      (ediff-get-region-contents ediff-current-difference 'A ediff-control-buffer)
+                      (ediff-get-region-contents ediff-current-difference 'B ediff-control-buffer))))
+  (defun ec-add-d-to-ediff-mode-map () (define-key ediff-mode-map "d" #'ec-ediff-copy-both-to-C))
+  (add-hook! 'ediff-keymap-setup-hook #'ec-add-d-to-ediff-mode-map))
+#+end_src
 ** Git
 *** git-auto-commit-mode
 #+begin_src emacs-lisp :tangle no
