@@ -691,6 +691,17 @@ Use [[https://github.com/dalance/svls][svls]] as SystemVerilog Language Server.
 #+end_src
 
 * Tools
+** counsel-search
+Set default search backend to google.
+#+begin_src emacs-lisp
+(after! counsel
+  :config
+  (setq counsel-search-engine 'google))
+#+end_src
+
+#+RESULTS:
+: google
+
 ** Ediff
 #+begin_src emacs-lisp
 (after! ediff
