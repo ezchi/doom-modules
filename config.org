@@ -101,6 +101,13 @@ Show =which-key= window faster.
 #+end_src
 
 * Languages
+** C++
+Do not indent namespace
+#+begin_src emacs-lisp
+(after! cc-mode
+  (add-hook! c++-mode
+             (setf (alist-get 'innamespace c-offsets-alist) 0)))
+#+end_src
 ** Go
 Format code before save.
 #+begin_src emacs-lisp
