@@ -127,6 +127,24 @@ Automatic clock-out when Emacs is idle for 5 mins
   (setq org-clock-auto-clockout-timer 300)
   (org-clock-auto-clockout-insinuate))
 #+end_src
+**** org-mru-clock
+Clock in with ivy completion.
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-mru-clock)
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! org-mru-clock
+  :init
+  (setq org-mru-clock-keep-formatting t)
+  (setq org-mru-clock-files #'org-agenda-files)
+  :config
+  (map! :localleader
+        :map org-mode-map
+        "ci" #'org-mru-clock-in
+        "cI" #'org-mru-clock-in))
+#+end_src
+
 *** Appearance
 **** Turn on org-table-header-mode by default
 #+begin_src emacs-lisp
@@ -164,6 +182,9 @@ Add review capture template.
 
 *** Babel
 **** http
+:PROPERTIES:
+:ID:       395e43bb-5343-4e56-b928-551be9cef389
+:END:
 Make http request within org-mode babel with [[https://github.com/zweifisch/ob-http][ob-http]].
 
 #+begin_src emacs-lisp :tangle packages.el
@@ -696,11 +717,9 @@ Set default search backend to google.
 #+begin_src emacs-lisp
 (after! counsel
   :config
-  (setq counsel-search-engine 'google))
+  (setq counsel-search-engine 'google)
+  (setq counsel-outline-display-style 'title))
 #+end_src
-
-#+RESULTS:
-: google
 
 ** Ediff
 #+begin_src emacs-lisp
@@ -805,6 +824,7 @@ Sometimes I need to generate random text to try things, such as Evil key binding
   :defer t)
 #+end_src
 
+
 ** Personal collections
 *** ec-elisp-dumpground
 Some Elisp code I am playing with and have no home for them yet.
@@ -886,3 +906,7 @@ Try out [[https://github.com/chuntaro/emacs-async-await][Emacs async-await]].
 #+begin_src emacs-lisp :tangle packages.el
 (package! async-await)
 #+end_src
+
+
+* Test
+** [[id:395e43bb-5343-4e56-b928-551be9cef389][http]]

@@ -14,14 +14,26 @@
 ;;      Alternatively, press 'gd' (or 'C-c c d') on a module to browse its
 ;;      directory (for easy access to its source code).
 
+(defun ec/my-location-at-p (location)
+  "Return non-nil if environement variable `MY_LOCATION' is set to `LOCATION'."
+  (string= (getenv "MY_LOCATION") location))
+
+(defun ec/at-home-p ()
+  "Return non-nil if MY_LOCATION is `@home'."
+  (ec/my-location-at-p "@home"))
+
+(defun ec/at-office-p ()
+  "Return non-nil if `MY_LOCATION' is `@office'."
+  (ec/my-location-at-p "@office"))
+
 (doom! :input
        ;;chinese
        ;;japanese
        ;;layout            ; auie,ctsrnm is the superior home row
 
        :completion
-       company           ; the ultimate code completion backend
-
+       (company           ; the ultimate code completion backend
+        +childframe)
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        (ivy               ; a search engine for love and life
@@ -32,10 +44,11 @@
        ;;deft              ; notational velocity for Emacs
        doom              ; what makes DOOM look the way it does
        doom-dashboard    ; a nifty splash screen for Emacs
-       ;;doom-quit         ; DOOM quit-message prompts when you quit Emacs
+       doom-quit         ; DOOM quit-message prompts when you quit Emacs
+       ;;(emoji +unicode)  ; 🙂
        ;;fill-column       ; a `fill-column' indicator
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
-       hydra
+       ;;hydra
        ;;indent-guides     ; highlighted indent columns
        ;;ligatures         ; ligatures and symbols to make your code pretty again
        ;;minimap           ; show a map of the code on the side
@@ -46,19 +59,18 @@
        (popup +defaults)   ; tame sudden yet inevitable temporary windows
        ;;tabs              ; a tab bar for Emacs
        ;;treemacs          ; a project drawer, like neotree but cooler
-       unicode           ; extended unicode support for various languages
+       ;;unicode           ; extended unicode support for various languages
        vc-gutter         ; vcs diff in the fringe
        vi-tilde-fringe   ; fringe tildes to mark beyond EOB
-       window-select     ; visually switch windows
-
+       ;;window-select     ; visually switch windows
        workspaces        ; tab emulation, persistence & separate workspaces
        ;;zen               ; distraction-free coding or writing
 
        :editor
        (evil +everywhere); come to the dark side, we have cookies
-       file-templates    ; auto-snippets for empty files
+       ;; file-templates    ; auto-snippets for empty files
        fold              ; (nigh) universal code folding
-       ;; format   ; automated prettiness
+       ;;(format +onsave)  ; automated prettiness
        ;;god               ; run Emacs commands without modifier keys
        ;;lispy             ; vim for lisp, for people who don't like vim
        multiple-cursors  ; editing in many places at once
@@ -83,9 +95,9 @@
        vterm             ; the best terminal emulation in Emacs
 
        :checkers
-       syntax              ; tasing you for every semicolon you forget
+       syntax            ; tasing you for every semicolon you forget
        spell             ; tasing you for misspelling mispelling
-       ;;grammar           ; tasing grammar mistake every you make
+       ;; grammar           ; tasing grammar mistake every you make
 
        :tools
        ;;ansible
@@ -108,11 +120,11 @@
        ;;taskrunner        ; taskrunner for all your projects
        ;;terraform         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
-       upload            ; map local to remote projects via ssh/ftp
+       ;; upload            ; map local to remote projects via ssh/ftp
 
        :os
        (:if IS-MAC macos)  ; improve compatibility with macOS
-       tty               ; improve the terminal Emacs experience
+       ;;tty               ; improve the terminal Emacs experience
 
        :lang
        ;;agda              ; types of types of types of types...
@@ -154,14 +166,21 @@
        ;;ocaml             ; an objective camel
        (org                ; organize your plain life in plain text
         +jupyter
-        +pomodoro
+        +pandoc
+        +dragndrop
+        ;; +pretty
+        ;; +pomodoro
         +present
         +roam
         )
        ;;php               ; perl's insecure younger brother
        plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
-       (python +lsp +pyright +pyenv)            ; beautiful is better than ugly
+       (python             ; beautiful is better than ugly
+        +lsp
+        +pyright
+        +pyenv
+        )
        ;;qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs
        ;;raku              ; the artist formerly known as perl6
@@ -180,7 +199,8 @@
        yaml              ; JSON, but readable
 
        :email
-       (mu4e +gmail)
+       (:if (ec/at-home-p)
+        mu4e +gmail +org)
        ;;notmuch
        ;;(wanderlust +gmail)
 
@@ -193,15 +213,3 @@
        :config
        literate
        (default +bindings +smartparens))
-
-(defun ec/my-location-at-p (location)
-  "Return non-nil if environement variable `MY_LOCATION' is set to `LOCATION'."
-  (string= (getenv "MY_LOCATION") location))
-
-(defun ec/at-home-p ()
-  "Return non-nil if MY_LOCATION is `@home'."
-  (ec/my-location-at-p "@home"))
-
-(defun ec/at-office-p ()
-  "Return non-nil if `MY_LOCATION' is `@office'."
-  (ec/my-location-at-p "@office"))
