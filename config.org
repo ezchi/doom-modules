@@ -20,7 +20,6 @@
 #+end_src
 
 * Better defaults
-
 ** Simple settings
 #+begin_src emacs-lisp
 (setq-default
@@ -47,7 +46,7 @@
 #+end_src
 
 Use *ivy* to choose buffer after window split.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 (defadvice! prompt-for-buffer (&rest _)
   :after '(evil-window-split evil-window-vsplit)
   (+ivy/switch-buffer))
@@ -375,7 +374,7 @@ Add =roam= capture template.
 
   (setq org-gcal-client-id (ec/get-gcal-config-value 'client_id)
         org-gcal-client-secret (ec/get-gcal-config-value 'client_secret)
-        org-gcal-fetch-file-alist `(("Enze.Chi@gmail.com" . ,(expand-file-name "gcal.org.gpg" doom-private-dir)))))
+        org-gcal-fetch-file-alist `(("Enze.Chi@gmail.com" . ,(expand-file-name "org/gcal.org.gpg" (getenv "HOME"))))))
 #+end_src
 
 #+begin_src emacs-lisp :tangle packages.el
