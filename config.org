@@ -56,16 +56,16 @@ Use *ivy* to choose buffer after window split.
 ** Fonts
 
 #+begin_src emacs-lisp
-(setq doom-font (font-spec :family "Go Mono for Powerline" :size 9))
+(setq doom-font (font-spec :family "Source Code Pro for Powerline" :size 9))
 (setq ec-font-zoom-factor 1.8)
 
 (when window-system
   ;; (setq resolution-factor (/ (x-display-pixel-height) 1080.0))
   (if (> (x-display-pixel-width) 2000)
-      (setq doom-font (font-spec :family "Go Mono for Powerline" :size 22))
-    (setq doom-font (font-spec :family "Go Mono for Powerline" :size 10))))
+      (setq doom-font (font-spec :family "Source Code Pro for Powerline" :size 22))
+    (setq doom-font (font-spec :family "Source Code Pro for Powerline" :size 10))))
 
-(setq doom-big-font (font-spec :family "Go Mono for Powerline" :size (round (* ec-font-zoom-factor (font-get doom-font :size)))))
+(setq doom-big-font (font-spec :family "Source Code Pro for Powerline" :size (round (* ec-font-zoom-factor (font-get doom-font :size)))))
 #+end_src
 
 ** Display time with date
@@ -697,7 +697,8 @@ Use [[https://github.com/dalance/svls][svls]] as SystemVerilog Language Server.
 (package! verilog-mode
   :recipe (:host github
            :repo "ezchi/verilog-mode"
-           :branch "lite"
+           ;; :branch "lite"
+           :branch "master"
            :files ("verilog-mode.el")
            :nonrecursive t))
 #+end_src
