@@ -69,8 +69,10 @@ Use *ivy* to choose buffer after window split.
 #+end_src
 
 ** Display time with date
-Display date and time in 24h format.
-#+begin_src emacs-lisp
+Display date and time in 24h format. Disable it as it may cause performance
+issue on Linux box with 50% *redisplay_internal* in profiling.
+
+#+begin_src emacs-lisp :tangle no
 (setq display-time-24hr-format t)
 (setq display-time-day-and-date t)
 (display-time-mode t)
@@ -111,6 +113,7 @@ Do not indent namespace
 Format code before save.
 #+begin_src emacs-lisp
 (after! go-mode
+  (setq gofmt-command "goimports")
   (add-hook! 'before-save-hook #'gofmt-before-save))
 #+end_src
 
@@ -697,8 +700,7 @@ Use [[https://github.com/dalance/svls][svls]] as SystemVerilog Language Server.
 (package! verilog-mode
   :recipe (:host github
            :repo "ezchi/verilog-mode"
-           ;; :branch "lite"
-           :branch "master"
+           :branch "indent-argument"
            :files ("verilog-mode.el")
            :nonrecursive t))
 #+end_src
