@@ -36,7 +36,6 @@
       truncate-string-ellipsis "…")               ; Unicode ellispis are nicer than "...", and also save /precious/ space
 
 (delete-selection-mode 1)                         ; Replace selection when inserting text
-(global-subword-mode 1)                           ; Iterate through CamelCase words
 #+end_src
 
 ** Windows
