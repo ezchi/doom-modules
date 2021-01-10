@@ -108,6 +108,18 @@ Do not indent namespace
   (add-hook! c++-mode
              (setf (alist-get 'innamespace c-offsets-alist) 0)))
 #+end_src
+** Dot
+#+begin_src emacs-lisp
+(use-package! graphviz-dot-mode)
+#+end_src
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! graphviz-dot-mode
+  :recipe (:host github
+           :repo "ppareit/graphviz-dot-mode"
+           :files ("graphviz-dot-mode.el")))
+#+end_src
+
 ** Go
 Format code before save.
 #+begin_src emacs-lisp
