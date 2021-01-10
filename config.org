@@ -79,7 +79,7 @@ issue on Linux box with 50% *redisplay_internal* in profiling.
 
 ** Full screen at startup
 #+begin_src emacs-lisp
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+(add-to-list 'initial-frame-alist '(fullscreen . fullboth))
 #+end_src
 
 * Key bindings
