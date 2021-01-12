@@ -79,22 +79,30 @@ issue on Linux box with 50% *redisplay_internal* in profiling.
 
 ** Full screen at startup
 #+begin_src emacs-lisp
-(add-to-list 'initial-frame-alist '(fullscreen . fullboth))
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+#+end_src
+* Daemon
+** After create daemon server hook
+#+begin_src emacs-lisp :tangle no
+(when (daemonp)
+  (add-hook! 'server-after-make-frame-hook #'which-key-mode))
 #+end_src
 
 * Key bindings
+** evil-escape
 I do not use *evil-escape* and disable it by default.
-#+begin_src emacs-lisp
-(after! evil
-  (evil-escape-mode nil))
+#+begin_src emacs-lisp :tangle packages.el
+(package! evil-escape :disable t)
 #+end_src
 
+** Local leader
 Change local leader key to =,=.
 
 #+begin_src emacs-lisp
 (setq doom-localleader-key ",")
 #+end_src
 
+** which-key
 Show =which-key= window faster.
 #+begin_src emacs-lisp
 (setq which-key-idle-delay 0.5)
@@ -111,13 +119,20 @@ Do not indent namespace
 ** Dot
 #+begin_src emacs-lisp
 (use-package! graphviz-dot-mode)
+
+(use-package! company-graphviz-dot)
 #+end_src
 
 #+begin_src emacs-lisp :tangle packages.el
 (package! graphviz-dot-mode
   :recipe (:host github
-           :repo "ppareit/graphviz-dot-mode"
-           :files ("graphviz-dot-mode.el")))
+           :repo "ppareit/graphviz-dot-mode"))
+           ;; :files ("graphviz-dot-mode.el")))
+
+;; (package! compnay-graphviz-dot
+;;   :recipe (:host github
+;;            :repo "ppareit/graphviz-dot-mode"
+;;            :files ("company-graphviz-dot.el")))
 #+end_src
 
 ** Go
@@ -343,6 +358,52 @@ Add =roam= capture template.
         :map doom-leader-notes-map
         :desc "Open server" "rso" #'org-roam-server-open)
   (org-roam-server-mode 1))
+#+end_src
+
+**** roam-block
+Roam block-ref and block-embed Emacs implementation.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! roam-block
+  :recipe (:host github
+           :repo "Kinneyzhang/roam-block"))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package roam-block
+  :hook (after-init . roam-block-mode)
+  :init (setq
+         roam-block-home '("~/org/roam")
+         roam-block-ref-highlight t
+         roam-block-embed-highlight t))
+
+(after! roam-block
+  (map! :leader
+        (:prefix ("nrB" . "Roam block")
+         "d" #'roam-block-delete-block
+         (:prefix ("r" . "Roam block ref")
+          "s" #'roam-block-ref-store
+          "i" #'roam-block-ref-insert
+          "d" #'roam-block-ref-delete
+          "t" #'roam-block-ref-highlight-toggle)
+         (:prefix ("e" . "Roam block embed")
+          "s" #'roam-block-embed-store
+          "i" #'roam-block-embed-insert
+          "t" #'roam-block-embed-highlight-toggle)))
+
+  (map! :localleader
+        :map org-mode-map
+        (:prefix ("mB" . "Roam block")
+         "d" #'roam-block-delete-block
+         (:prefix ("r" . "Roam block ref")
+          "s" #'roam-block-ref-store
+          "i" #'roam-block-ref-insert
+          "d" #'roam-block-ref-delete
+          "t" #'roam-block-ref-highlight-toggle)
+         (:prefix ("e" . "Roam block embed")
+          "s" #'roam-block-embed-store
+          "i" #'roam-block-embed-insert
+          "t" #'roam-block-embed-highlight-toggle))))
 #+end_src
 
 *** TODOs
