@@ -977,6 +977,24 @@ Fetch for new email for every 5 minutes.
 (package! rg)
 #+end_src
 
+** promise
+#+begin_src emacs-lisp
+;; (use-package! promise)
+#+end_src
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! promise)
+#+end_src
+
+** iter2
+#+begin_src emacs-lisp
+;; (use-package! iter2)
+#+end_src
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! iter2)
+#+end_src
+
 ** async-wait
 Try out [[https://github.com/chuntaro/emacs-async-await][Emacs async-await]].
 
