@@ -110,7 +110,12 @@ Show =which-key= window faster.
 
 * Languages
 ** C++
-Do not indent namespace
+*** Apply c++-mode to special files
+#+begin_src emacs-lisp
+(add-to-list 'auto-mode-alist '("\\uvm\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\systemc\\'" . c++-mode))
+#+end_src
+*** Do not indent namespace
 #+begin_src emacs-lisp
 (after! cc-mode
   (add-hook! c++-mode
