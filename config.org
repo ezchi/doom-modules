@@ -195,6 +195,19 @@ Clock in with ivy completion.
 #+begin_src emacs-lisp :tangle packages.el
 (package! org-pretty-tags)
 #+end_src
+**** valign
+Better align org-table and more.
+
+#+begin_src emacs-lisp
+(use-package! valign
+  :hook ((org-mode . valign-mode)))
+#+end_src
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! valign
+  :recipe (:host github
+           :repo "casouri/valign"))
+#+end_src
 
 *** Review
 **** Capture templates
