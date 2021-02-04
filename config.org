@@ -57,7 +57,7 @@ Use *ivy* to choose buffer after window split.
 
 #+begin_src emacs-lisp
 (setq doom-font (font-spec :family "Source Code Pro for Powerline" :size 9))
-(setq ec-font-zoom-factor 1.8)
+(setq ec-font-zoom-factor 1.5)
 
 (when window-system
   ;; (setq resolution-factor (/ (x-display-pixel-height) 1080.0))
