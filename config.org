@@ -117,8 +117,8 @@ Show =which-key= window faster.
          :desc "Previous group" "p" #'centaur-tabs-backward-group
          :desc "Next group" "n" #'centaur-tabs-forward-group
          :desc "Switch group" "s" #'centaur-tabs-counsel-switch-group
-         :desc "Group tabs by project" #'centaur-tabs-group-by-projectile-project
-         :desc "Group tabs by centaur" #'centaur-tabs-group-buffer-groups)))
+         :desc "Group tabs by project" "P" #'centaur-tabs-group-by-projectile-project
+         :desc "Group tabs by centaur" "G" #'centaur-tabs-group-buffer-groups)))
 #+end_src
 
 * Languages
