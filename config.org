@@ -109,18 +109,6 @@ Show =which-key= window faster.
 (setq which-key-idle-delay 0.5)
 #+end_src
 
-** centaur-tabs
-#+begin_src emacs-lisp
-(after! centaur-tabs
-  (map! :leader
-        (:prefix-map ("TAB" . "Tab Group")
-         :desc "Previous group" "p" #'centaur-tabs-backward-group
-         :desc "Next group" "n" #'centaur-tabs-forward-group
-         :desc "Switch group" "s" #'centaur-tabs-counsel-switch-group
-         :desc "Group tabs by project" "P" #'centaur-tabs-group-by-projectile-project
-         :desc "Group tabs by centaur" "G" #'centaur-tabs-group-buffer-groups)))
-#+end_src
-
 * Languages
 ** C++
 *** Apply c++-mode to special files
