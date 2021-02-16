@@ -317,11 +317,11 @@ Add agenda command for weekly review.
 #+end_src
 
 *** Export
-Enable syntax highlight for exported source blocks with =minted=.
-#+begin_src emacs-lisp
-(after! org
-  (setq org-latex-listings 'minted)
-  (setq org-latex-packages-alist '(("" "minted"))))
+Enable syntax highli          ght for exported source blocks with =minted=.
+#+be            gin_src emacs-lisp
+(after! or      g
+  (setq or      g-latex-listings 'minted)
+  (setq or      g-latex-packa ges-alist '(("" "minted"))))
 #+end_src
 
 *** Roam
@@ -375,46 +375,48 @@ Add =roam= capture template.
 Roam block-ref and block-embed Emacs implementation.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! roam-block
-  :recipe (:host github
-           :repo "Kinneyzhang/roam-block"))
+(when IS-MAC
+  (package! roam-block
+    :recipe (:host github
+             :repo "Kinneyzhang/roam-block")))
 #+end_src
 
 #+begin_src emacs-lisp
-(use-package roam-block
-  :hook (after-init . roam-block-mode)
-  :init (setq
-         roam-block-home '("~/org/roam")
-         roam-block-ref-highlight t
-         roam-block-embed-highlight t))
+(when IS-MAC
+  (use-package roam-block
+    :hook (after-init . roam-block-mode)
+    :init (setq
+           roam-block-home '("~/org/roam")
+           roam-block-ref-highlight t
+           roam-block-embed-highlight t))
 
-(after! roam-block
-  (map! :leader
-        (:prefix ("nrB" . "Roam block")
-         "d" #'roam-block-delete-block
-         (:prefix ("r" . "Roam block ref")
-          "s" #'roam-block-ref-store
-          "i" #'roam-block-ref-insert
-          "d" #'roam-block-ref-delete
-          "t" #'roam-block-ref-highlight-toggle)
-         (:prefix ("e" . "Roam block embed")
-          "s" #'roam-block-embed-store
-          "i" #'roam-block-embed-insert
-          "t" #'roam-block-embed-highlight-toggle)))
+  (after! roam-block
+    (map! :leader
+          (:prefix ("nrB" . "Roam block")
+           "d" #'roam-block-delete-block
+           (:prefix ("r" . "Roam block ref")
+            "s" #'roam-block-ref-store
+            "i" #'roam-block-ref-insert
+            "d" #'roam-block-ref-delete
+            "t" #'roam-block-ref-highlight-toggle)
+           (:prefix ("e" . "Roam block embed")
+            "s" #'roam-block-embed-store
+            "i" #'roam-block-embed-insert
+            "t" #'roam-block-embed-highlight-toggle)))
 
-  (map! :localleader
-        :map org-mode-map
-        (:prefix ("mB" . "Roam block")
-         "d" #'roam-block-delete-block
-         (:prefix ("r" . "Roam block ref")
-          "s" #'roam-block-ref-store
-          "i" #'roam-block-ref-insert
-          "d" #'roam-block-ref-delete
-          "t" #'roam-block-ref-highlight-toggle)
-         (:prefix ("e" . "Roam block embed")
-          "s" #'roam-block-embed-store
-          "i" #'roam-block-embed-insert
-          "t" #'roam-block-embed-highlight-toggle))))
+    (map! :localleader
+          :map org-mode-map
+          (:prefix ("mB" . "Roam block")
+           "d" #'roam-block-delete-block
+           (:prefix ("r" . "Roam block ref")
+            "s" #'roam-block-ref-store
+            "i" #'roam-block-ref-insert
+            "d" #'roam-block-ref-delete
+            "t" #'roam-block-ref-highlight-toggle)
+           (:prefix ("e" . "Roam block embed")
+            "s" #'roam-block-embed-store
+            "i" #'roam-block-embed-insert
+            "t" #'roam-block-embed-highlight-toggle)))))
 #+end_src
 
 *** TODOs
