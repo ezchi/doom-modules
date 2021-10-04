@@ -45,13 +45,6 @@
       evil-split-window-below t)
 #+end_src
 
-Use *ivy* to choose buffer after window split.
-#+begin_src emacs-lisp :tangle no
-(defadvice! prompt-for-buffer (&rest _)
-  :after '(evil-window-split evil-window-vsplit)
-  (+ivy/switch-buffer))
-#+end_src
-
 * Appearance
 ** Fonts
 
@@ -76,17 +69,6 @@ issue on Linux box with 50% *redisplay_internal* in profiling.
 (setq display-time-24hr-format t)
 (setq display-time-day-and-date t)
 (display-time-mode t)
-#+end_src
-
-** Full screen at startup
-#+begin_src emacs-lisp
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
-#+end_src
-* Daemon
-** After create daemon server hook
-#+begin_src emacs-lisp :tangle no
-(when (daemonp)
-  (add-hook! 'server-after-make-frame-hook #'which-key-mode))
 #+end_src
 
 * Key bindings
@@ -320,7 +302,7 @@ Enable syntax highli          ght for exported source blocks with =minted=.
   (setq or      g-latex-packa ges-alist '(("" "minted"))))
 #+end_src
 
-*** Roam
+*** COMMENT Roam
 Add =roam= capture template.
 #+begin_src emacs-lisp
 (after! org-roam
@@ -339,7 +321,7 @@ Add =roam= capture template.
            :unnarrowed t))))
 #+end_src
 
-**** org-roam-server
+**** COMMENT org-roam-server
 #+begin_src emacs-lisp :tangle packages.el
 (package! org-roam-server)
 #+end_src
@@ -367,7 +349,7 @@ Add =roam= capture template.
   (org-roam-server-mode 1))
 #+end_src
 
-**** roam-block
+**** COMMENT roam-block
 Roam block-ref and block-embed Emacs implementation.
 
 #+begin_src emacs-lisp :tangle packages.el
