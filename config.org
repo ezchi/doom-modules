@@ -142,43 +142,11 @@ Set the base variables before load org-mode.
 (add-to-list 'org-agenda-files org-roam-directory)
 #+end_src
 
-*** Clock
-**** org-mru-clock
-Clock in with ivy completion.
-#+begin_src emacs-lisp :tangle packages.el
-;; (package! org-mru-clock)
-#+end_src
-
-#+begin_src emacs-lisp
-;; (use-package! org-mru-clock
-;;   :init
-;;   (setq org-mru-clock-keep-formatting t)
-;;   ;; (setq org-mru-clock-files org-agenda-files)
-;;   :config
-;;   (map! :localleader
-;;         :map org-mode-map
-;;         "cI" #'org-mru-clock-in))
-#+end_src
-
 *** Appearance
 **** Turn on org-table-header-mode by default
 #+begin_src emacs-lisp
 (setq org-table-header-line-p t)
 #+end_src
-**** valign
-Better align org-table and more.
-
-#+begin_src emacs-lisp
-;; (use-package! valign
-;;   :hook ((org-mode . valign-mode)))
-#+end_src
-
-#+begin_src emacs-lisp :tangle packages.el
-;; (package! valign
-;;   :recipe (:host github
-;;            :repo "casouri/valign"))
-#+end_src
-
 *** Review
 **** Capture templates
 Add review capture template.
@@ -276,12 +244,12 @@ Add agenda command for weekly review.
            ((org-agenda-compact-blocks t))))))
 #+end_src
 
-**** Try out super agenda
+**** COMMENT Try out super agenda
 #+begin_src emacs-lisp :tangle packages.el
 (package! org-super-agenda)
 #+end_src
 
-*** Capture
+*** COMMENT Capture
 
 **** Declarative Org Capture Templates (doct)
 #+begin_src emacs-lisp :tangle packages.el
@@ -295,11 +263,11 @@ Add agenda command for weekly review.
 #+end_src
 
 *** Export
-Enable syntax highli          ght for exported source blocks with =minted=.
-#+be            gin_src emacs-lisp
-(after! or      g
-  (setq or      g-latex-listings 'minted)
-  (setq or      g-latex-packa ges-alist '(("" "minted"))))
+Enable syntax highlight for exported source blocks with =minted=.
+#+begin_src emacs-lisp
+(after! org
+  (setq org-latex-listings 'minted)
+  (setq org-latex-packages-alist '(("" "minted"))))
 #+end_src
 
 *** COMMENT Roam
@@ -403,7 +371,7 @@ Roam block-ref and block-embed Emacs implementation.
   (setq org-enforce-todo-checkbox-dependencies t))
 #+end_src
 
-**** Extensible Dependencies 'N' Actions (EDNA)
+**** COMMENT Extensible Dependencies 'N' Actions (EDNA)
 #+begin_src emacs-lisp :tangle packages.el
 (package! org-edna)
 #+end_src
@@ -425,7 +393,7 @@ Roam block-ref and block-embed Emacs implementation.
            :files ("*.el" ("snippets" ("org-mode" "snippets/org-mode/*")))))
 #+end_src
 
-*** Google calendar
+*** COMMENT Google calendar
 #+begin_src emacs-lisp :tangle (if (ec/at-home-p) "yes" "no")
 (use-package! org-gcal
   :commands (org-gcal-sync)
@@ -447,7 +415,7 @@ Roam block-ref and block-embed Emacs implementation.
 (package! org-gcal)
 #+end_src
 
-*** org-ql
+*** COMMENT org-ql
 Query lanugage for Org files.
 
 #+begin_src emacs-lisp
@@ -805,19 +773,6 @@ Set default search backend to google.
   (defun ec-add-d-to-ediff-mode-map () (define-key ediff-mode-map "d" #'ec-ediff-copy-both-to-C))
   (add-hook! 'ediff-keymap-setup-hook #'ec-add-d-to-ediff-mode-map))
 #+end_src
-** Git
-*** git-auto-commit-mode
-#+begin_src emacs-lisp :tangle no
-(use-package! git-auto-commit-mode
-  :commands (git-auto-commit-mode)
-  :config
-  (setq gac-debounce-interval 3600))
-#+end_src
-
-*** Packages
-#+begin_src emacs-lisp :tangle no
-(package! git-auto-commit-mode)
-#+end_src
 ** GPG :noexport:
 These are encrypted with gpg and are essentially set mostly by custom-*
 #+begin_src emacs-lisp :tangle (if (ec/at-home-p) "yes" "no")
@@ -860,7 +815,7 @@ Needs a solution to use =ripgrep= to search =gitignore= files in a project.
         :desc "rg" "r" #'rg)))
 #+end_src
 
-*** consel-fd
+*** counsel-fd
 Search files with =fd=. So far this is best solution for me to search ignored files in a project.
 
 #+begin_src emacs-lisp
