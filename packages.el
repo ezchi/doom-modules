@@ -8,34 +8,11 @@
                            "org-re-reveal"
                            "org-pretty-tags"
                            ))
-(package! "gcmh"
-  :recipe (:host github
-           :repo "emacsmirror/gcmh"))
-(package! "shrink-path"
-  :recipe (:host github
-           :repo "emacsmirror/shrink-path"))
-(package! "undo-fu"
-  :recipe (:host github
-           :repo "emacsmirror/undo-fu"))
-(package! "undo-fu-session"
-  :recipe (:host github
-           :repo "emacsmirror/undo-fu-session"))
-(package! "git-timemachine"
-  :recipe (:host github
-           :repo "emacsmirror/git-timemachine"))
-(package! "fish-completion"
-  :recipe (:host github
-           :repo "emacsmirror/fish-completion"))
-(package! "org-contrib"
-  :recipe (:host github
-           :repo "emacsmirror/org-contrib"))
-(package! "org-re-reveal"
-  :recipe (:host github
-           :repo "emacsmirror/org-re-reveal"))
-(package! "org-pretty-tags"
-  :recipe (:host github
-           :repo "emacsmirror/org-pretty-tags"))
-
+(mapc (lambda (r)
+        (package! (intern r)
+          :recipe (:host github
+                   :repo (format "emacsmirror/%s" r))))
+      ec/emacs-mirror-repos)
 
 (package! evil-escape :disable t)
 
