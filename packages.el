@@ -6,6 +6,7 @@
                            "fish-completion"
                            "org-contrib"
                            "org-re-reveal"
+                           "org-pretty-tags"
                            ))
 (mapc (lambda (r)
         (package! (intern r)
