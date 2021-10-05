@@ -937,7 +937,7 @@ Some Elisp code I am playing with and have no home for them yet.
 #+begin_src emacs-lisp
 (use-package! ecdate)
 #+end_src
-* Email
+* COMMENT Email
 #+begin_src emacs-lisp :tangle (if (ec/at-home-p) "yes" "no")
 (after! mu4e
   (set-email-account! "Gmail"
