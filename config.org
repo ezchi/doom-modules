@@ -913,7 +913,6 @@ Sometimes I need to generate random text to try things, such as Evil key binding
         "s" #'slack-group-select)))
 #+end_src
 
-
 ** Personal collections
 *** ec-elisp-dumpground
 Some Elisp code I am playing with and have no home for them yet.
