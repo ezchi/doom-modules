@@ -752,7 +752,7 @@ Use [[https://github.com/dalance/svls][svls]] as SystemVerilog Language Server.
 #+end_src
 
 * Tools
-** counsel-search
+** COMMENT counsel-search
 Set default search backend to google.
 #+begin_src emacs-lisp
 (after! counsel
@@ -801,7 +801,7 @@ Enable this if need to debug the authentication issues.
   :commands (optiver-fex-rerun-previous-command optiver-fex-dispatch))
 #+end_src
 ** Search
-*** rg
+*** COMMENT rg
 Needs a solution to use =ripgrep= to search =gitignore= files in a project.
 
 #+begin_src emacs-lisp
@@ -815,7 +815,7 @@ Needs a solution to use =ripgrep= to search =gitignore= files in a project.
         :desc "rg" "r" #'rg)))
 #+end_src
 
-*** counsel-fd
+*** COMMENT counsel-fd
 Search files with =fd=. So far this is best solution for me to search ignored files in a project.
 
 #+begin_src emacs-lisp
@@ -979,7 +979,7 @@ Fetch for new email for every 5 minutes.
            :files ("*.el" "filters" "preprocessors")))
 #+end_src
 
-** rg
+** COMMENT rg
 #+begin_src emacs-lisp :tangle packages.el
 (package! rg)
 #+end_src
