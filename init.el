@@ -58,12 +58,12 @@
        ;;neotree           ; a project drawer, like NERDTree for vim
        ophints           ; highlight the region an operation acts on
        (popup +defaults)   ; tame sudden yet inevitable temporary windows
-       ;; tabs              ; a tab bar for Emacs
+       ;;tabs              ; a tab bar for Emacs
        ;;treemacs          ; a project drawer, like neotree but cooler
        ;; unicode           ; extended unicode support for various languages
        vc-gutter         ; vcs diff in the fringe
-       vi-tilde-fringe   ; fringe tildes to mark beyond EOB
-       window-select     ; visually switch windows
+       ;; vi-tilde-fringe   ; fringe tildes to mark beyond EOB
+       ;; window-select     ; visually switch windows
        workspaces        ; tab emulation, persistence & separate workspaces
        ;;zen               ; distraction-free coding or writing
 
@@ -84,7 +84,7 @@
        :emacs
        (dired             ; making dired pretty [functional]
         +icons)
-       electric          ; smarter, keyword-based electric-indent
+       ;; electric          ; smarter, keyword-based electric-indent
        ;;ibuffer         ; interactive buffer management
        undo              ; persistent, smarter undo for your inevitable mistakes
        vc                ; version-control and Emacs, sitting in a tree
@@ -93,7 +93,7 @@
        eshell            ; the elisp shell that works everywhere
        ;;shell             ; simple shell REPL for Emacs
        ;;term              ; basic terminal emulator for Emacs
-       vterm             ; the best terminal emulation in Emacs
+       ;; vterm             ; the best terminal emulation in Emacs
 
        :checkers
        (syntax            ; tasing you for every semicolon you forget
@@ -181,7 +181,7 @@
        ;;purescript        ; javascript, but functional
        (python             ; beautiful is better than ugly
         +lsp
-        +pyright
+        ;; +pyright
         +pyenv
         )
        ;;qt                ; the 'cutest' gui framework ever
@@ -193,7 +193,7 @@
        ;; (rust +lsp)         ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
        ;;(scheme +guile)   ; a fully conniving family of lisps
-       sh                ; she sells {ba,z,fi}sh shells on the C xor
+       ;; sh                ; she sells {ba,z,fi}sh shells on the C xor
        ;;sml
        ;;solidity          ; do you need a blockchain? No.
        ;;swift             ; who asked for emoji variables?
@@ -203,8 +203,8 @@
        ;;zig               ; C, but simpler
 
        :email
-       (:if (ec/at-home-p)
-        mu4e +gmail +org)
+       ;; (:if (ec/at-home-p)
+       ;;  mu4e +gmail +org)
        ;;notmuch
        ;;(wanderlust +gmail)
 
