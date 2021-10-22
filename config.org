@@ -1016,15 +1016,15 @@ Try out [[https://github.com/chuntaro/emacs-async-await][Emacs async-await]].
 ** emacsmirror packages
 #+begin_src emacs-lisp :tangle packages.el
 (setq ec/emacs-mirror-repos '("gcmh"
-                           "shrink-path"
-                           "undo-fu"
-                           "undo-fu-session"
-                           "git-timemachine"
-                           "fish-completion"
-                           "org-contrib"
-                           "org-re-reveal"
-                           "org-pretty-tags"
-                           ))
+                              "shrink-path"
+                              "undo-fu"
+                              "undo-fu-session"
+                              "git-timemachine"
+                              "fish-completion"
+                              "org-contrib"
+                              "org-re-reveal"
+                              "org-pretty-tags"
+                              ))
 
 (mapc (lambda (r)
         `(package! ,(intern r)
