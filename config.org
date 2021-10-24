@@ -1015,19 +1015,20 @@ Try out [[https://github.com/chuntaro/emacs-async-await][Emacs async-await]].
 
 ** emacsmirror packages
 #+begin_src emacs-lisp :tangle no :results org
-  (setq ec/emacs-mirror-repos '("gcmh"
-				"shrink-path"
-				"undo-fu"
-				"undo-fu-session"
-				"git-timemachine"
-				"fish-completion"
-				"org-contrib"
-				"org-re-reveal"
-				"org-pretty-tags"
-				))
+(setq ec/emacs-mirror-repos '("gcmh"
+                              "shrink-path"
+                              "undo-fu"
+                              "undo-fu-session"
+                              "git-timemachine"
+                              "fish-completion"
+                              "org"
+                              "org-contrib"
+                              "org-re-reveal"
+                              "org-pretty-tags"
+                              ))
 
-  (mapcar (lambda (r)
-	  (format "(package! %s :recipe `(:host github :repo \"emacsmirror/%s\"))\n" r r))
+(mapcar (lambda (r)
+          (format "(package! %s :recipe `(:host github :repo \"emacsmirror/%s\"))\n" r r))
 	ec/emacs-mirror-repos)
 #+end_src
 
@@ -1038,6 +1039,7 @@ Try out [[https://github.com/chuntaro/emacs-async-await][Emacs async-await]].
 (package! undo-fu-session :recipe `(:host github :repo "emacsmirror/undo-fu-session"))
 (package! git-timemachine :recipe `(:host github :repo "emacsmirror/git-timemachine"))
 (package! fish-completion :recipe `(:host github :repo "emacsmirror/fish-completion"))
+(package! org :recipe `(:host github :repo "emacsmirror/org"))
 (package! org-contrib :recipe `(:host github :repo "emacsmirror/org-contrib"))
 (package! org-re-reveal :recipe `(:host github :repo "emacsmirror/org-re-reveal"))
 (package! org-pretty-tags :recipe `(:host github :repo "emacsmirror/org-pretty-tags"))
