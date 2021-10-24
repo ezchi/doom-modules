@@ -1014,7 +1014,7 @@ Try out [[https://github.com/chuntaro/emacs-async-await][Emacs async-await]].
 #+end_src
 
 ** emacsmirror packages
-#+begin_src emacs-lisp :tangle no :results org
+#+begin_src emacs-lisp :tangle no :results value raw
 (setq ec/emacs-mirror-repos '("gcmh"
                               "shrink-path"
                               "undo-fu"
@@ -1027,22 +1027,23 @@ Try out [[https://github.com/chuntaro/emacs-async-await][Emacs async-await]].
                               "org-pretty-tags"
                               ))
 
-(mapcar (lambda (r)
-          (format "(package! %s :recipe `(:host github :repo \"emacsmirror/%s\"))\n" r r))
-	ec/emacs-mirror-repos)
+(format "#+begin_src emacs-lisp :tangle packages.el
+%s#+end_src" (string-join (cl-loop for p in ec/emacs-mirror-repos collect
+                                   (format "(package! %s :recipe (:host github :repo \"emacsmirror/%s\"))\n" p p))))
 #+end_src
 
+#+RESULTS:
 #+begin_src emacs-lisp :tangle packages.el
-(package! gcmh :recipe `(:host github :repo "emacsmirror/gcmh"))
-(package! shrink-path :recipe `(:host github :repo "emacsmirror/shrink-path"))
-(package! undo-fu :recipe `(:host github :repo "emacsmirror/undo-fu"))
-(package! undo-fu-session :recipe `(:host github :repo "emacsmirror/undo-fu-session"))
-(package! git-timemachine :recipe `(:host github :repo "emacsmirror/git-timemachine"))
-(package! fish-completion :recipe `(:host github :repo "emacsmirror/fish-completion"))
-(package! org :recipe `(:host github :repo "emacsmirror/org"))
-(package! org-contrib :recipe `(:host github :repo "emacsmirror/org-contrib"))
-(package! org-re-reveal :recipe `(:host github :repo "emacsmirror/org-re-reveal"))
-(package! org-pretty-tags :recipe `(:host github :repo "emacsmirror/org-pretty-tags"))
+(package! gcmh :recipe (:host github :repo "emacsmirror/gcmh"))
+(package! shrink-path :recipe (:host github :repo "emacsmirror/shrink-path"))
+(package! undo-fu :recipe (:host github :repo "emacsmirror/undo-fu"))
+(package! undo-fu-session :recipe (:host github :repo "emacsmirror/undo-fu-session"))
+(package! git-timemachine :recipe (:host github :repo "emacsmirror/git-timemachine"))
+(package! fish-completion :recipe (:host github :repo "emacsmirror/fish-completion"))
+(package! org :recipe (:host github :repo "emacsmirror/org"))
+(package! org-contrib :recipe (:host github :repo "emacsmirror/org-contrib"))
+(package! org-re-reveal :recipe (:host github :repo "emacsmirror/org-re-reveal"))
+(package! org-pretty-tags :recipe (:host github :repo "emacsmirror/org-pretty-tags"))
 #+end_src
 
 * Test
