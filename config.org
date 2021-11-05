@@ -51,13 +51,17 @@
 #+begin_src emacs-lisp
 (setq doom-font (font-spec :family "Source Code Pro for Powerline" :size 12))
 (setq ec-font-zoom-factor 1.5)
-
-(when window-system
-  ;; (setq resolution-factor (/ (x-display-pixel-height) 1080.0))
-  (if (> (x-display-pixel-width) 2000)
-      (setq doom-font (font-spec :family "Source Code Pro for Powerline" :size 22))))
-
 (setq doom-big-font (font-spec :family "Source Code Pro for Powerline" :size (round (* ec-font-zoom-factor (font-get doom-font :size)))))
+
+(defun ec/load-font ()
+  "Load font after adjust size according to screen resolution."
+  (interactive)
+  (when window-system
+    (if (> (x-display-pixel-width) 2000)
+        (setq doom-font (font-spec :family "Source Code Pro for Powerline" :size 22))))
+  (doom/reload-font))
+
+(add-hook 'server-after-make-frame-hook #'ec/load-font)
 #+end_src
 
 
