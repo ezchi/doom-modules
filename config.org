@@ -270,6 +270,11 @@ Enable syntax highlight for exported source blocks with =minted=.
   (setq org-latex-packages-alist '(("" "minted"))))
 #+end_src
 
+*** taskjuggler
+#+begin_src emacs-lisp
+(after! org
+  (add-to-list 'org-export-backends 'taskjuggler))
+#+end_src
 *** COMMENT Roam
 Add =roam= capture template.
 #+begin_src emacs-lisp
