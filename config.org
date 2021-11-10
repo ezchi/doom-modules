@@ -95,6 +95,13 @@ Show =which-key= window faster.
 (setq which-key-idle-delay 0.5)
 #+end_src
 
+** Toggle
+#+begin_src emacs-lisp
+(map! :leader
+      (:prefix ("t" . "Toggle")
+       :desc "Frame maximize" "M" #'toggle-frame-maximized))
+#+end_src
+
 * Languages
 ** C++
 *** Apply c++-mode to special files
@@ -442,6 +449,11 @@ Apply *python-mode* on =SConstruct=.
   :mode ("SConstruct\\'" . python-mode)
   :config
   (setq python-shell-completion-native-enable nil))
+
+(when (ec/at-office-p)
+  (after! lsp-pyls
+    (setq lsp-pyls-disable-warning t)
+    (set-lsp-priority! 'pyls 1)))
 #+end_src
 
 ** VHDL
@@ -559,7 +571,10 @@ here until upstream fix it.
 
 #+begin_src emacs-lisp
 (after! vhdl-mode
-  (add-hook! vhdl-mode #'(ec-vhdl-init lsp! ec-vhdl-tool-start-server yas-minor-mode-on)))
+  (let ((funcs '(ec-vhdl-init lsp! ec-vhdl-tool-start-server yas-minor-mode-on)))
+    (mapc (lambda (f)
+            (add-hook! vhdl-mode f))
+          funcs)))
 #+end_src
 
 *** yasnippets-vhdl
