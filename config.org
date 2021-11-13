@@ -37,6 +37,9 @@
       truncate-string-ellipsis "…")               ; Unicode ellispis are nicer than "...", and also save /precious/ space
 
 (delete-selection-mode 1)                         ; Replace selection when inserting text
+
+(set-language-environment "UTF-8")
+(set-default-coding-systems 'utf-8)
 #+end_src
 
 ** Windows
@@ -937,7 +940,7 @@ Sometimes I need to generate random text to try things, such as Evil key binding
         "s" #'slack-group-select)))
 #+end_src
 
-** Personal collections
+** COMMENT Personal collections
 *** ec-elisp-dumpground
 Some Elisp code I am playing with and have no home for them yet.
 #+begin_src emacs-lisp :tangle packages.el
