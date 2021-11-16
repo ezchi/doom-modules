@@ -459,6 +459,12 @@ Apply *python-mode* on =SConstruct=.
     (set-lsp-priority! 'pyls 1)))
 #+end_src
 
+** Rust
+#+begin_src emacs-lisp
+(after! rustic
+  (setq rustic-format-on-save t))
+#+end_src
+
 ** VHDL
 *** Initialization
 #+begin_src emacs-lisp
