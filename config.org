@@ -827,6 +827,31 @@ Enable this if need to debug the authentication issues.
 (use-package! optiver-fex
   :commands (optiver-fex-rerun-previous-command optiver-fex-dispatch))
 #+end_src
+
+*** optiver-eml-plus
+#+begin_src emacs-lisp :tangle (if (ec/at-office-p) "packages.el" "no")
+(package! optiver-eml-plus
+  :recipe (:type git
+           :repo "ssh://git@git:7999/~enzchi/optiver-eml-plus.git"))
+#+end_src
+
+#+begin_src emacs-lisp :tangle (if (ec/at-office-p) "yes" "no")
+(use-package! optiver-eml-plus
+  :commands (optiver-eml-plus-dispatch optiver-eml-plus-rerun-previous-command))
+#+end_src
+
+*** optiver-boxes
+#+begin_src emacs-lisp :tangle (if (ec/at-office-p) "packages.el" "no")
+(package! optiver-boxes
+  :recipe (:type git
+           :repo "ssh://git@git:7999/~enzchi/optiver-boxes.git"))
+#+end_src
+
+#+begin_src emacs-lisp :tangle (if (ec/at-office-p) "yes" "no")
+(use-package! optiver-boxes)
+#+end_src
+
+
 ** Search
 *** COMMENT rg
 Needs a solution to use =ripgrep= to search =gitignore= files in a project.
