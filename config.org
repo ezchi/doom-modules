@@ -165,6 +165,8 @@ Set the base variables before load org-mode.
 **** Capture templates
 Add review capture template.
 #+begin_src emacs-lisp
+(after! org
+  (defalias '+org--restart-mode-h #'ignore))
 (after! org-capture
   (setq ec/org-capture-review-file (expand-file-name "reviews.org" org-directory))
   (mapc (lambda (template)
