@@ -4,8 +4,8 @@
 ;; in. Remember to run 'doom sync' after modifying it!
 
 ;; NOTE Press 'SPC h d h' (or 'C-h d h' for non-vim users) to access Doom's
-;;      documentation. There you'll find a "Module Index" link where you'll find
-;;      a comprehensive list of Doom's modules and what flags they support.
+;;      documentation. There you'll find a link to Doom's Module Index where all
+;;      of our modules are listed, including what flags they support.
 
 ;; NOTE Move your cursor over a module's name (or its flags) and press 'K' (or
 ;;      'C-c c k' for non-vim users) to view its documentation. This works on
@@ -14,19 +14,23 @@
 ;;      Alternatively, press 'gd' (or 'C-c c d') on a module to browse its
 ;;      directory (for easy access to its source code).
 
-(defun ec/my-location-at-p (location)
+(defun my/my-location-at-p (location)
   "Return non-nil if environement variable `MY_LOCATION' is set to `LOCATION'."
-  (string= (getenv "MY_LOCATION") location))
+  (or (string= (getenv "MY_LOCATION") location)
+      (file-exists-p (expand-file-name (concat "~/." location)))))
 
-(defun ec/at-home-p ()
+(defun my/at-home-p ()
   "Return non-nil if MY_LOCATION is `@home'."
-  (ec/my-location-at-p "@home"))
+  (interactive)
+  (my/my-location-at-p "@home"))
 
-(defun ec/at-office-p ()
+(defun my/at-office-p ()
   "Return non-nil if `MY_LOCATION' is `@office'."
-  (ec/my-location-at-p "@office"))
+  (interactive)
+  (my/my-location-at-p "@office"))
 
 (doom! :input
+       ;;bidi              ; (tfel ot) thgir etirw uoy gnipleh
        ;;chinese
        ;;japanese
        ;;layout            ; auie,ctsrnm is the superior home row
@@ -36,17 +40,14 @@
         +childframe)
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
-       ;; (ivy               ; a search engine for love and life
-       ;;  +prescient
-       ;;  +childframe
-       ;;  +icons)
-       vertico
+       ;;ivy               ; a search engine for love and life
+       vertico           ; the search engine of the future
 
        :ui
        ;;deft              ; notational velocity for Emacs
        doom              ; what makes DOOM look the way it does
        doom-dashboard    ; a nifty splash screen for Emacs
-       doom-quit         ; DOOM quit-message prompts when you quit Emacs
+       ;;doom-quit         ; DOOM quit-message prompts when you quit Emacs
        ;;(emoji +unicode)  ; 🙂
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        ;;hydra
@@ -60,7 +61,7 @@
        (popup +defaults)   ; tame sudden yet inevitable temporary windows
        ;;tabs              ; a tab bar for Emacs
        ;;treemacs          ; a project drawer, like neotree but cooler
-       ;; unicode           ; extended unicode support for various languages
+       ;;unicode           ; extended unicode support for various languages
        vc-gutter         ; vcs diff in the fringe
        ;; vi-tilde-fringe   ; fringe tildes to mark beyond EOB
        ;; window-select     ; visually switch windows
@@ -69,7 +70,7 @@
 
        :editor
        (evil +everywhere); come to the dark side, we have cookies
-       ;; file-templates    ; auto-snippets for empty files
+       file-templates    ; auto-snippets for empty files
        fold              ; (nigh) universal code folding
        ;;(format +onsave)  ; automated prettiness
        ;;god               ; run Emacs commands without modifier keys
@@ -103,7 +104,8 @@
 
        :tools
        ;;ansible
-       ;; debugger          ; FIXME stepping through code, to help you add bugs
+       ;;biblio            ; Writes a PhD for you (citation needed)
+       ;;debugger          ; FIXME stepping through code, to help you add bugs
        ;;direnv
        ;;docker
        ;;editorconfig      ; let someone else argue about tabs vs spaces
@@ -112,7 +114,6 @@
        ;;gist              ; interacting with github gists
        lookup              ; navigate your code and its documentation
        (lsp +peek)
-       ;;macos             ; MacOS-specific commands
        magit             ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
@@ -122,7 +123,7 @@
        ;;taskrunner        ; taskrunner for all your projects
        ;;terraform         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
-       ;; upload            ; map local to remote projects via ssh/ftp
+       ;;upload            ; map local to remote projects via ssh/ftp
 
        :os
        (:if IS-MAC macos)  ; improve compatibility with macOS
@@ -147,15 +148,17 @@
        ;;ess               ; emacs speaks statistics
        ;;factor
        ;;faust             ; dsp, but you get to keep your soul
+       ;;fortran           ; in FORTRAN, GOD is REAL (unless declared INTEGER)
        ;;fsharp            ; ML stands for Microsoft's Language
        ;;fstar             ; (dependent) types and (monadic) effects and Z3
        ;;gdscript          ; the language you waited for
-       (go +lsp)         ; the hipster dialect
-       ;;(haskell +dante)  ; a language that's lazier than I am
+       ;;(go +lsp)         ; the hipster dialect
+       ;;(graphql +lsp)    ; Give queries a REST
+       ;;(haskell +lsp)    ; a language that's lazier than I am
        ;;hy                ; readability of scheme w/ speed of python
-       ;;idris             ;
+       ;;idris             ; a language you can depend on
        json              ; At least it ain't XML
-       ;;(java +meghanada) ; the poster child for carpal tunnel syndrome
+       ;;(java +lsp)       ; the poster child for carpal tunnel syndrome
        ;;javascript        ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
@@ -182,7 +185,6 @@
        (python             ; beautiful is better than ugly
         +lsp
         +pyright
-        +pyenv
         )
        ;;qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs
@@ -190,10 +192,10 @@
        rest              ; Emacs as a REST client
        ;;rst               ; ReST in peace
        ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-       (rust +lsp)         ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       ;; (rust +lsp)         ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
        ;;(scheme +guile)   ; a fully conniving family of lisps
-       ;; sh                ; she sells {ba,z,fi}sh shells on the C xor
+       sh                ; she sells {ba,z,fi}sh shells on the C xor
        ;;sml
        ;;solidity          ; do you need a blockchain? No.
        ;;swift             ; who asked for emoji variables?
@@ -203,8 +205,7 @@
        ;;zig               ; C, but simpler
 
        :email
-       ;; (:if (ec/at-home-p)
-       ;;  mu4e +gmail +org)
+       ;;(mu4e +org +gmail)
        ;;notmuch
        ;;(wanderlust +gmail)
 

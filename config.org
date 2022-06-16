@@ -415,7 +415,7 @@ Roam block-ref and block-embed Emacs implementation.
 #+end_src
 
 *** COMMENT Google calendar
-#+begin_src emacs-lisp :tangle (if (ec/at-home-p) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (my/at-home-p) "yes" "no")
 (use-package! org-gcal
   :commands (org-gcal-sync)
   :init
@@ -455,7 +455,7 @@ Apply *python-mode* on =SConstruct=.
   :config
   (setq python-shell-completion-native-enable nil))
 
-(when (ec/at-office-p)
+(when (my/at-office-p)
   (after! lsp-pyls
     (setq lsp-pyls-disable-warning t)
     (set-lsp-priority! 'pyls 1)))
@@ -755,7 +755,7 @@ Use [[https://github.com/dalance/svls][svls]] as SystemVerilog Language Server.
   :defer t)
 #+end_src
 
-#+begin_src emacs-lisp :tangle (if (ec/at-office-p) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (my/at-office-p) "yes" "no")
 (use-package! yasnippets-opt-verilog
   :defer t)
 #+end_src
@@ -779,7 +779,7 @@ Use [[https://github.com/dalance/svls][svls]] as SystemVerilog Language Server.
            :files ("*.el" ("snippets" ("verilog-mode" "snippets/verilog-mode/*")))))
 #+end_src
 
-#+begin_src emacs-lisp :tangle (if (ec/at-office-p) "packages.el" "no")
+#+begin_src emacs-lisp :tangle (if (my/at-office-p) "packages.el" "no")
 (package! yasnippets-opt-verilog
   :recipe (:type git
            :repo "ssh://git@git:7999/~enzchi/yasnippets-opt-verilog.git"
@@ -810,7 +810,7 @@ Set default search backend to google.
 #+end_src
 ** GPG :noexport:
 These are encrypted with gpg and are essentially set mostly by custom-*
-#+begin_src emacs-lisp :tangle (if (ec/at-home-p) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (my/at-home-p) "yes" "no")
 (use-package! epa-file
   :config
   (setenv "GPG_AGENT_INFO" nil)
@@ -825,37 +825,37 @@ Enable this if need to debug the authentication issues.
 
 ** Optiver
 *** optiver-fex
-#+begin_src emacs-lisp :tangle (if (ec/at-office-p) "packages.el" "no")
+#+begin_src emacs-lisp :tangle (if (my/at-office-p) "packages.el" "no")
 (package! optiver-fex
   :recipe (:type git
            :repo "ssh://git@git:7999/~enzchi/optiver-fex.git"))
 #+end_src
 
-#+begin_src emacs-lisp :tangle (if (ec/at-office-p) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (my/at-office-p) "yes" "no")
 (use-package! optiver-fex
   :commands (optiver-fex-rerun-previous-command optiver-fex-dispatch))
 #+end_src
 
 *** optiver-eml-plus
-#+begin_src emacs-lisp :tangle (if (ec/at-office-p) "packages.el" "no")
+#+begin_src emacs-lisp :tangle (if (my/at-office-p) "packages.el" "no")
 (package! optiver-eml-plus
   :recipe (:type git
            :repo "ssh://git@git:7999/~enzchi/optiver-eml-plus.git"))
 #+end_src
 
-#+begin_src emacs-lisp :tangle (if (ec/at-office-p) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (my/at-office-p) "yes" "no")
 (use-package! optiver-eml-plus
   :commands (optiver-eml-plus-dispatch optiver-eml-plus-rerun-previous-command))
 #+end_src
 
 *** optiver-boxes
-#+begin_src emacs-lisp :tangle (if (ec/at-office-p) "packages.el" "no")
+#+begin_src emacs-lisp :tangle (if (my/at-office-p) "packages.el" "no")
 (package! optiver-boxes
   :recipe (:type git
            :repo "ssh://git@git:7999/~enzchi/optiver-boxes.git"))
 #+end_src
 
-#+begin_src emacs-lisp :tangle (if (ec/at-office-p) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (my/at-office-p) "yes" "no")
 (use-package! optiver-boxes)
 #+end_src
 
@@ -997,7 +997,7 @@ Some Elisp code I am playing with and have no home for them yet.
 (use-package! ecdate)
 #+end_src
 * COMMENT Email
-#+begin_src emacs-lisp :tangle (if (ec/at-home-p) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (my/at-home-p) "yes" "no")
 (after! mu4e
   (set-email-account! "Gmail"
                       '((mu4e-sent-folder       . "/[Gmail].Sent Mail")
@@ -1013,7 +1013,7 @@ Some Elisp code I am playing with and have no home for them yet.
 
 Set bookmark for =Inbox= which excludes =Trash= folder
 
-#+begin_src emacs-lisp :tangle (if (ec/at-home-p) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (my/at-home-p) "yes" "no")
 (after! mu4e
   (add-to-list 'mu4e-bookmarks
                (make-mu4e-bookmark
@@ -1023,7 +1023,7 @@ Set bookmark for =Inbox= which excludes =Trash= folder
 #+end_src
 
 Fetch for new email for every 5 minutes.
-#+begin_src emacs-lisp :tangle (if (ec/at-home-p) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (my/at-home-p) "yes" "no")
 (after! mu4e
   (setq mu4e-update-interval 300))
 #+end_src
